@@ -1,0 +1,28 @@
+        000f2f3c 57 70 e1 cc     vsetivli                       zero,0x2,e16,mf4,ta,ma
+        000f2f40 13 07 c9 04     addi                           a4,s2,0x4c
+        000f2f44 07 51 07 02     vle16.v                        v2,(a4)
+        000f2f48 3c 64           c.ld                           a5,0x48(s0)
+        000f2f4a d7 a0 08 52     vid.v                          v1
+        000f2f4e 93 0a 09 ff     addi                           s5,s2,-0x10
+        000f2f52 05 69           c.lui                          s2,0x1
+        000f2f54 d7 b0 10 0e     vrsub.vi                       v1,v1,0x1
+        000f2f58 ca 97           c.add                          a5,s2
+        000f2f5a 03 a7 c7 57     lw                             a4,0x57c(a5)
+        000f2f5e 83 b6 8a 07     ld                             a3,0x78(s5)
+        000f2f62 d7 81 20 32     vrgather.vv                    v3,v2,v1
+        000f2f66 57 70 50 0c     vsetvli                        zero,zero,e8,mf8,ta,ma 
+        000f2f6a 57 31 00 5e     vmv.v.i                        v2,0x0
+        000f2f6e 13 67 07 04     ori                            a4,a4,0x40
+        000f2f72 23 ae e7 56     sw                             a4,0x57c(a5)
+        000f2f76 57 70 70 0d     vsetvli                        zero,zero,e32,mf2,ta,ma
+        000f2f7a a7 d1 04 02     vse16.v                        v3,(s1)
+        000f2f7e 94 ec           c.sd                           a3,0x18(s1)
+        000f2f80 93 87 84 7c     addi                           a5,s1,0x7c8
+        000f2f84 27 81 07 02     vse8.v                         v2,(a5)
+        000f2f88 d7 a0 08 52     vid.v                          v1
+        000f2f8c 13 07 b0 03     li                             a4,0x3b
+        000f2f90 d7 60 17 96     vmul.vx                        v1,v1,a4
+        000f2f94 21 47           c.li                           a4,0x8
+        000f2f96 23 a6 e4 7c     sw                             a4,0x7cc(s1)
+        000f2f9a 13 87 04 7d     addi                           a4,s1,0x7d0
+        000f2f9e a7 60 07 02     vse32.v                        v1,(a4)

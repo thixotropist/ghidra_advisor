@@ -1,0 +1,12 @@
+module(
+    name = "training_set",
+    version = "0.1",
+)
+
+bazel_dep(name="gcc_riscv_suite", version="15.0.0")
+bazel_dep(name="fedora_syslibs", version="40.0.0")
+
+register_toolchains(
+    # a riscv 64 bit toolchain built with the latest Gnu Compiler Suite
+    "//toolchains:riscv64-gcc",
+)

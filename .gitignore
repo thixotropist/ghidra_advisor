@@ -1,0 +1,11 @@
+MODULE.bazel.lock
+__pycache__/
+.ipynb_checkpoints/
+bazel-*
+*~
+Samples.db
+.hugo_build.lock
+go.sum
+node_modules
+public/
+resources

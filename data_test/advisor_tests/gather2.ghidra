@@ -1,0 +1,25 @@
+
+; undefined rx_recv_pkts()
+LAB_0053c12e                                    XREF[2]:     0053be34(j), 0053be42(j)  
+        0053c12e 73 2e 20 c2     csrrs                          t3,vlenb,zero
+        0053c132 57 73 80 0d     vsetvli                        t1,zero,e64,m1,ta,ma 
+        0053c136 b3 0e c0 41     neg                            t4,t3
+        0053c13a 93 58 3e 00     srli                           a7,t3,0x3
+        0053c13e 3e 97           c.add                          a4,a5
+        0053c140 d7 a1 08 52     vid.v                          v3
+        0053c144 93 87 0e 04     addi                           a5,t4,0x40
+        0053c148 93 86 f8 ff     addi                           a3,a7,-0x1
+        0053c14c 33 67 f7 20     sh3add                         a4,a4,a5
+        0053c150 d7 c1 36 0e     vrsub.vx                       v3,v3,a3
+        0053c154 5a 97           c.add                          a4,s6
+        0053c156 3b 8f 1b 41     subw                           t5,s7,a7
+        0053c15a a2 86           c.mv                           a3,s0
+        0053c15c 81 47           c.li                           a5,0x0
+                             LAB_0053c15e                                    XREF[1]:     0053c172(j)  
+        0053c15e 07 71 87 02     vl1re64.v                      v2,(a4)
+        0053c162 bb 87 17 01     addw                           a5,a5,a7
+        0053c166 76 97           c.add                          a4,t4
+        0053c168 d7 80 21 32     vrgather.vv                    v1,v2,v3
+        0053c16c a7 80 86 02     vs1r.v                         v1,(a3)
+        0053c170 f2 96           c.add                          a3,t3
+        0053c172 e3 76 ff fe     bgeu                           t5,a5,LAB_0053c15e

@@ -1,0 +1,6 @@
+[submodule "data"]
+	path = data
+	url = ./data
+[submodule "gcc_riscv_testsuite"]
+	path = gcc_riscv_testsuite
+	url = ./gcc_riscv_testsuite
