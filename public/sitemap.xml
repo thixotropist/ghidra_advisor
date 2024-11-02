@@ -2,38 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>ghidra_advisor/docs/developer_reference/dependencies/</loc>
+    <loc>https://thixotropist.github.io/ghidra_advisor/docs/developer_reference/dependencies/</loc>
     <lastmod>2024-11-02T15:00:04-04:00</lastmod>
   </url><url>
-    <loc>ghidra_advisor/docs/</loc>
+    <loc>https://thixotropist.github.io/ghidra_advisor/docs/</loc>
     <lastmod>2024-11-02T15:00:04-04:00</lastmod>
   </url><url>
-    <loc>ghidra_advisor/docs/examples/</loc>
+    <loc>https://thixotropist.github.io/ghidra_advisor/docs/examples/</loc>
     <lastmod>2024-11-02T15:00:04-04:00</lastmod>
   </url><url>
-    <loc>ghidra_advisor/docs/examples/whisper_main_example/</loc>
+    <loc>https://thixotropist.github.io/ghidra_advisor/docs/examples/whisper_main_example/</loc>
     <lastmod>2024-11-02T15:00:04-04:00</lastmod>
   </url><url>
-    <loc>ghidra_advisor/docs/developer_reference/populating_database/</loc>
+    <loc>https://thixotropist.github.io/ghidra_advisor/docs/developer_reference/populating_database/</loc>
     <lastmod>2024-11-02T15:00:04-04:00</lastmod>
   </url><url>
-    <loc>ghidra_advisor/docs/examples/dpdk_example/</loc>
+    <loc>https://thixotropist.github.io/ghidra_advisor/docs/examples/dpdk_example/</loc>
     <lastmod>2024-11-02T15:00:04-04:00</lastmod>
   </url><url>
-    <loc>ghidra_advisor/docs/developer_reference/</loc>
+    <loc>https://thixotropist.github.io/ghidra_advisor/docs/developer_reference/</loc>
     <lastmod>2024-11-02T15:00:04-04:00</lastmod>
   </url><url>
-    <loc>ghidra_advisor/docs/developer_reference/feature_analysis/</loc>
+    <loc>https://thixotropist.github.io/ghidra_advisor/docs/developer_reference/feature_analysis/</loc>
     <lastmod>2024-11-02T15:00:04-04:00</lastmod>
   </url><url>
-    <loc>ghidra_advisor/docs/developer_reference/faq/</loc>
+    <loc>https://thixotropist.github.io/ghidra_advisor/docs/developer_reference/faq/</loc>
     <lastmod>2024-11-02T15:00:04-04:00</lastmod>
   </url><url>
-    <loc>ghidra_advisor/categories/</loc>
+    <loc>https://thixotropist.github.io/ghidra_advisor/categories/</loc>
   </url><url>
-    <loc>ghidra_advisor/</loc>
+    <loc>https://thixotropist.github.io/ghidra_advisor/</loc>
     <lastmod>2024-11-02T15:00:04-04:00</lastmod>
   </url><url>
-    <loc>ghidra_advisor/tags/</loc>
+    <loc>https://thixotropist.github.io/ghidra_advisor/tags/</loc>
   </url>
 </urlset>

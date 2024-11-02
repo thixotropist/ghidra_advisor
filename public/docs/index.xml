@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ghidra Advisor for RISCV-64 Vector Extensions – Ghidra Advisor Reference</title>
-    <link>ghidra_advisor/docs/</link>
+    <link>https://thixotropist.github.io/ghidra_advisor/docs/</link>
     <description>Recent content in Ghidra Advisor Reference on Ghidra Advisor for RISCV-64 Vector Extensions</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	  <atom:link href="ghidra_advisor/docs/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://thixotropist.github.io/ghidra_advisor/docs/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>Docs: Advisor Dependencies</title>
-      <link>ghidra_advisor/docs/developer_reference/dependencies/</link>
+      <link>https://thixotropist.github.io/ghidra_advisor/docs/developer_reference/dependencies/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>ghidra_advisor/docs/developer_reference/dependencies/</guid>
+      <guid>https://thixotropist.github.io/ghidra_advisor/docs/developer_reference/dependencies/</guid>
       <description>
         
         
@@ -75,10 +75,10 @@ with the definitive set of RISCV extensions available to the hardware threads (a
     
     <item>
       <title>Docs: Whisper.cpp Example</title>
-      <link>ghidra_advisor/docs/examples/whisper_main_example/</link>
+      <link>https://thixotropist.github.io/ghidra_advisor/docs/examples/whisper_main_example/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>ghidra_advisor/docs/examples/whisper_main_example/</guid>
+      <guid>https://thixotropist.github.io/ghidra_advisor/docs/examples/whisper_main_example/</guid>
       <description>
         
         
@@ -262,10 +262,10 @@ so any possible gain is due to a tradeoff between code size and branch handling.
     
     <item>
       <title>Docs: Populating the Database</title>
-      <link>ghidra_advisor/docs/developer_reference/populating_database/</link>
+      <link>https://thixotropist.github.io/ghidra_advisor/docs/developer_reference/populating_database/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>ghidra_advisor/docs/developer_reference/populating_database/</guid>
+      <guid>https://thixotropist.github.io/ghidra_advisor/docs/developer_reference/populating_database/</guid>
       <description>
         
         
@@ -322,10 +322,10 @@ examples and repeating the match, to see if they can reproduce the C code that m
     
     <item>
       <title>Docs: DPDK Network Example</title>
-      <link>ghidra_advisor/docs/examples/dpdk_example/</link>
+      <link>https://thixotropist.github.io/ghidra_advisor/docs/examples/dpdk_example/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>ghidra_advisor/docs/examples/dpdk_example/</guid>
+      <guid>https://thixotropist.github.io/ghidra_advisor/docs/examples/dpdk_example/</guid>
       <description>
         
         
@@ -751,10 +751,10 @@ with vectorization.&lt;/p&gt;
     
     <item>
       <title>Docs: Feature Analysis</title>
-      <link>ghidra_advisor/docs/developer_reference/feature_analysis/</link>
+      <link>https://thixotropist.github.io/ghidra_advisor/docs/developer_reference/feature_analysis/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>ghidra_advisor/docs/developer_reference/feature_analysis/</guid>
+      <guid>https://thixotropist.github.io/ghidra_advisor/docs/developer_reference/feature_analysis/</guid>
       <description>
         
         
@@ -803,10 +803,10 @@ from instruction flows.&lt;/li&gt;
     
     <item>
       <title>Docs: Frequently Asked Questions</title>
-      <link>ghidra_advisor/docs/developer_reference/faq/</link>
+      <link>https://thixotropist.github.io/ghidra_advisor/docs/developer_reference/faq/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>ghidra_advisor/docs/developer_reference/faq/</guid>
+      <guid>https://thixotropist.github.io/ghidra_advisor/docs/developer_reference/faq/</guid>
       <description>
         
         

@@ -1,12 +1,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ghidra Advisor for RISCV-64 Vector Extensions – Ghidra Advisor Examples</title>
-    <link>ghidra_advisor/docs/examples/</link>
+    <link>https://thixotropist.github.io/ghidra_advisor/docs/examples/</link>
     <description>Recent content in Ghidra Advisor Examples on Ghidra Advisor for RISCV-64 Vector Extensions</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	  <atom:link href="ghidra_advisor/docs/examples/index.xml" rel="self" type="application/rss+xml" />
+	  <atom:link href="https://thixotropist.github.io/ghidra_advisor/docs/examples/index.xml" rel="self" type="application/rss+xml" />
     
     
       
@@ -16,10 +16,10 @@
     
     <item>
       <title>Docs: Whisper.cpp Example</title>
-      <link>ghidra_advisor/docs/examples/whisper_main_example/</link>
+      <link>https://thixotropist.github.io/ghidra_advisor/docs/examples/whisper_main_example/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>ghidra_advisor/docs/examples/whisper_main_example/</guid>
+      <guid>https://thixotropist.github.io/ghidra_advisor/docs/examples/whisper_main_example/</guid>
       <description>
         
         
@@ -203,10 +203,10 @@ so any possible gain is due to a tradeoff between code size and branch handling.
     
     <item>
       <title>Docs: DPDK Network Example</title>
-      <link>ghidra_advisor/docs/examples/dpdk_example/</link>
+      <link>https://thixotropist.github.io/ghidra_advisor/docs/examples/dpdk_example/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>ghidra_advisor/docs/examples/dpdk_example/</guid>
+      <guid>https://thixotropist.github.io/ghidra_advisor/docs/examples/dpdk_example/</guid>
       <description>
         
         
