@@ -1,0 +1,224 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ghidra Advisor for RISCV-64 Vector Extensions – Ghidra Advisor Reference</title>
+    <link>ghidra_advisor/docs/developer_reference/</link>
+    <description>Recent content in Ghidra Advisor Reference on Ghidra Advisor for RISCV-64 Vector Extensions</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	  <atom:link href="ghidra_advisor/docs/developer_reference/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>Docs: Advisor Dependencies</title>
+      <link>ghidra_advisor/docs/developer_reference/dependencies/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>ghidra_advisor/docs/developer_reference/dependencies/</guid>
+      <description>
+        
+        
+        &lt;h2 id=&#34;ghidra&#34;&gt;Ghidra&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Ghidra 11.3_DEV with the RISCV-64 &lt;a href=&#34;https://github.com/thixotropist/ghidra/tree/isa_ext&#34;&gt;isa_ext&lt;/a&gt; branch.
+Without this branch Ghidra is stuck with a never-ratified older version of RISCV support.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;bazel&#34;&gt;Bazel&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/bazelbuild/bazel/releases&#34;&gt;Bazel 11.4&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Bazel builds in this workspace generate output in the temporary directory /run/user/1000/bazel, as specified in .bazelrc.
+This override can be changed or removed.&lt;/p&gt;
+&lt;h2 id=&#34;toolchain&#34;&gt;Toolchain&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://sourceware.org/git/binutils-gdb&#34;&gt;binutils 2.42.50&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://gcc.gnu.org/git/gcc&#34;&gt;gcc 15.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;glibc developmental version 2.39.9000&lt;/li&gt;
+&lt;li&gt;sysroot - a stripped down linux sysroot derived from the sysroot bootstrap in
+&lt;a href=&#34;https://github.com/riscv-collab/riscv-gnu-toolchain&#34;&gt;riscv-gnu-toolchain&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The toolchain is packaged locally as a Bazel module named &lt;code&gt;gcc_riscv_suite&lt;/code&gt;, version 15.0.0.
+This module depends on a second module, &lt;code&gt;fedora_syslibs&lt;/code&gt; version 40.0.0.  These are served out of a local
+Bazel module repository.
+The &lt;code&gt;gcc_riscv_suite&lt;/code&gt; and &lt;code&gt;fedora_syslibs&lt;/code&gt; modules wrap a 42 MB and 4.0 MB tarball, respectively.&lt;/p&gt;
+&lt;h2 id=&#34;emulators&#34;&gt;Emulators&lt;/h2&gt;
+&lt;p&gt;Two qemu emulators are used, both built from source shortly after the 9.0.50 release.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;qemu-riscv64&lt;/code&gt; provides user space emulation, which is very useful for exploring the behavior of
+particularly confusing assembly code sequences.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;qemu-system-riscv64&lt;/code&gt; provides full RISCV-64 VM hosting.  This is more narrowly useful when testing
+binaries that require non-standard kernel options or kernel modules.
+&lt;ul&gt;
+&lt;li&gt;The RISCV-64 VM used here is based on an Ubuntu 24.04 disk image and the &lt;code&gt;u-boot.bin&lt;/code&gt; boot loader.
+This boot loader is critical for RISCV VMs, since the emulated BIOS firmware provides the kernel
+with the definitive set of RISCV extensions available to the hardware threads (aka harts)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;jupyter&#34;&gt;Jupyter&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;jupyterlab 4.1.1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;system&#34;&gt;System&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Fedora 40 with wayland graphics.&lt;/li&gt;
+&lt;li&gt;Python 3&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Populating the Database</title>
+      <link>ghidra_advisor/docs/developer_reference/populating_database/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>ghidra_advisor/docs/developer_reference/populating_database/</guid>
+      <description>
+        
+        
+        &lt;p&gt;The training set consists of matched C source code and RISCV-64 disassembly code.
+The C source is processed through the C preprocessor &lt;code&gt;cpp&lt;/code&gt; and &lt;code&gt;indent&lt;/code&gt;.  That code is then
+compiled with GCC and at least two different machine architectures, then saved under &lt;code&gt;./data&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;populating-the-training-set-database&#34;&gt;Populating the Training Set Database&lt;/h2&gt;
+&lt;p&gt;The initial C source code is selected from the GCC riscv autovector testsuite.  We can add
+custom examples of code to fill gaps or represent code patterns we might find in a Ghidra binary
+under review.  Autovectored loops over structure arrays can be especially confusing to interpret,
+so we will likely want extra samples of that type.&lt;/p&gt;
+&lt;p&gt;The C sources for these two test suites appear in &lt;code&gt;./gcc_riscv_testsuite&lt;/code&gt; and &lt;code&gt;./custom_testsuite&lt;/code&gt;.
+The script &lt;code&gt;generator.py&lt;/code&gt; processes these into cpp output (&lt;code&gt;*.i&lt;/code&gt;), compiled libraries (&lt;code&gt;*.so&lt;/code&gt;), and objdump
+assembly listings (&lt;code&gt;*_objdump&lt;/code&gt;) for each requested machine architecture.&lt;/p&gt;
+&lt;p&gt;For example, &lt;code&gt;gcc_riscv_testsuite/rvv/autovec/reduc/reduc-1.c&lt;/code&gt; is processed by &lt;code&gt;generator.py&lt;/code&gt; into:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;data/gcc_riscv_testsuite/rvv/autovec/reduc/reduc-1_rv64gc.i&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;data/gcc_riscv_testsuite/rvv/autovec/reduc/reduc-1_rv64gc.so&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;data/gcc_riscv_testsuite/rvv/autovec/reduc/reduc-1_rv64gc_objdump&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;data/gcc_riscv_testsuite/rvv/autovec/reduc/reduc-1_rv64gcv.i&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;data/gcc_riscv_testsuite/rvv/autovec/reduc/reduc-1_rv64gcv.so&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;data/gcc_riscv_testsuite/rvv/autovec/reduc/reduc-1_rv64gcv_objdump&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The &lt;code&gt;ingest.py&lt;/code&gt; script reads everything under &lt;code&gt;./data&lt;/code&gt; to populate the &lt;code&gt;sample&lt;/code&gt; table in the Sqlite3 database&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;sample&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;CREATE&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;TABLE&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;sample&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;INTEGER&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;PRIMARY&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;KEY&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;AUTOINCREMENT&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;namespace&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;TEXT&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;arch&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;TEXT&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;name&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;TEXT&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;source&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;TEXT&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;assembly&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;TEXT&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Next we need to generate signatures from this table with the &lt;code&gt;sample_analytics.py&lt;/code&gt; script.  At present, signatures are simple
+strings.  We have three signature types at the moment.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-sql&#34; data-lang=&#34;sql&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;.&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;schema&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;signatures&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;CREATE&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;TABLE&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;signatures&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;(&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;id&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;INTEGER&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;PRIMARY&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;KEY&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;AUTOINCREMENT&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;sample_id&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;INTEGER&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;signature_type&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;TEXT&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;signature_value&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87&#34;&gt;TEXT&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;);&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;select&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;distinct&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;signature_type&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#204a87;font-weight:bold&#34;&gt;from&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;signatures&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;;&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Traits&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Opcodes&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;sorted&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;Opcodes&lt;/span&gt;&lt;span style=&#34;color:#000;font-weight:bold&#34;&gt;,&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt; &lt;/span&gt;&lt;span style=&#34;color:#000&#34;&gt;ordered&lt;/span&gt;&lt;span style=&#34;color:#f8f8f8;text-decoration:underline&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;The &lt;code&gt;Traits&lt;/code&gt; signature holds simple facts from the disassembly code, such as &lt;code&gt;hasLoop&lt;/code&gt; if at least one backwards branch exists.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;Opcodes, ordered&lt;/code&gt; signature is a simple list of vector and branch opcodes, concatenated in the same order as
+they are found in the disassembly.&lt;/li&gt;
+&lt;li&gt;The &lt;code&gt;Opcodes, sorted&lt;/code&gt; signature is similar to &lt;code&gt;Opcodes, ordered&lt;/code&gt;, but sorted into alphanumeric order.  This may be useful if
+the compiler reorders instructions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;querying-the-database-in-advisor&#34;&gt;Querying the Database in Advisor&lt;/h2&gt;
+
+&lt;figure&gt;
+    &lt;img src=&#34;Workflow_advisor.svg&#34; width=&#34;80%&#34;/&gt; 
+&lt;/figure&gt;
+
+&lt;p&gt;Users can select assembly code from Ghidra&amp;rsquo;s listing window, then run analysis cells in &lt;code&gt;Advisor.ipynb&lt;/code&gt; to generate reports
+on the types of C code that may match the listing.  Users will likely want to iterate complex selections by adding custom
+examples and repeating the match, to see if they can reproduce the C code that might have generated the vectorized assembly.&lt;/p&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Feature Analysis</title>
+      <link>ghidra_advisor/docs/developer_reference/feature_analysis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>ghidra_advisor/docs/developer_reference/feature_analysis/</guid>
+      <description>
+        
+        
+        &lt;p&gt;At a very high level the Advisor tries to translate between two languages - C or C++ source code that a human might write
+and the sequence of assembly language instructions a compiler generates.  Compilers are very good at the forward translation
+from C to assembly.  We want something that works in the reverse direction - suggesting C or other source code
+that might have been compiled into specific assembly sequences.&lt;/p&gt;
+&lt;p&gt;The Advisor tries to brute-force this reverse translation by compiling a reference set of C sources into binaries, extracting
+the instructions with &lt;code&gt;objdump&lt;/code&gt; into a database, then looking for the best match to the instructions copied into the clipboard.
+The GCC compiler test suite gives us thousands of reference C functions to start with.&lt;/p&gt;
+&lt;p&gt;Some features are easy to recognize.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;if the assembly listing includes a backwards branch instruction and branch target, then the source code likely
+contains a vectorized loop.&lt;/li&gt;
+&lt;li&gt;if the assembly listing includes an instruction matching &lt;code&gt;vred*&lt;/code&gt;, &lt;code&gt;vfred*&lt;/code&gt; &lt;code&gt;vwred*&lt;/code&gt;, then the source code likely
+contains a vectorized reduction loop reading a vector and emitting a scalar.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Other features are mostly distractions, adding entropy that we would like to ignore:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The local choice of registers to hold intermediate values&lt;/li&gt;
+&lt;li&gt;The specific loop termination branch condition - a test against a counter, an input pointer,
+or an output pointer are all equally valid but only one will be implemented.&lt;/li&gt;
+&lt;li&gt;Instruction ordering is often arbitrary inside a loop, as counters and pointers are incremented/decremented.&lt;/li&gt;
+&lt;li&gt;The compiler may reorder instructions to minimize the impact of memory latency.&lt;/li&gt;
+&lt;li&gt;The compiler will change the emitted instructions for inlined function depending on what it knows at compile
+time.  This is especially true when the compiler knows the exact number of loop iterations, the alignment of
+operands, and the minimum size of vector registers.&lt;/li&gt;
+&lt;li&gt;The compiler will change the emitted instructions based on the local &amp;lsquo;register pressure&amp;rsquo; - whether or not there are lots
+of free vector registers.&lt;/li&gt;
+&lt;li&gt;The compiler (or inline header macros) will translate a simple loop into multiple code blocks evaluated at run time.
+If the count is small, a scalar implementation is used.  If the count is large one or more vector blocks are used.&lt;/li&gt;
+&lt;li&gt;The compiler writers sometimes have to guess whether to optimize for instruction count, minimal branches, or memory
+accesses.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And some features are harder to recognize but useful for the Ghidra user:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Operand type is sometimes set at runtime, not encoded into the instruction opcode.&lt;/li&gt;
+&lt;li&gt;Compilers can emit completely different code if the machine architecture indicates a vector length of greater than 128 bits.&lt;/li&gt;
+&lt;li&gt;Vector registers may be grouped based on runtime context, so that the number of registers read or written must be inferred
+from instruction flows.&lt;/li&gt;
+&lt;li&gt;The compiler will accept intrinsic vector functions - not all vector loops have a C counterpart.&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>Docs: Frequently Asked Questions</title>
+      <link>ghidra_advisor/docs/developer_reference/faq/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>ghidra_advisor/docs/developer_reference/faq/</guid>
+      <description>
+        
+        
+        &lt;dl&gt;
+&lt;dt&gt;Why Bazel?&lt;/dt&gt;
+&lt;dd&gt;Bazel does a good job of managing cross-compiler builds and build caches together,
+where the cross-compiler toolchain can be switched easily.&lt;/dd&gt;
+&lt;dt&gt;How do I compile with support for RISCV Instruction Set Architecture extensions?&lt;/dt&gt;
+&lt;dd&gt;The binutils and gcc base code need to support those extensions first.
+The gcc compiler uses the &lt;code&gt;-march=&lt;/code&gt; command line option to identify which
+extensions to apply for a given compilation. For example &lt;code&gt;-march=rv32gcv&lt;/code&gt; says
+vector instructions are supported, while &lt;code&gt;-march=rv32gc&lt;/code&gt; excludes vector instructions.&lt;/dd&gt;
+&lt;dt&gt;What machine architectures are currently implemented?&lt;/dt&gt;
+&lt;dd&gt;The &lt;code&gt;variables.bzl&lt;/code&gt; file sets &lt;code&gt;MARCH_SET = (&amp;quot;rv64gc&amp;quot;, &amp;quot;rv64gcv&amp;quot;)&lt;/code&gt;.  Most sources are then
+compiled with and without vector support.&lt;/dd&gt;
+&lt;dt&gt;Are all RISCV vector binaries runnable on all vector hardware threads?&lt;/dt&gt;
+&lt;dd&gt;Not always.  By default GCC will build for a minimum vector register length (&lt;code&gt;VLEN&lt;/code&gt;) of 128 bits,
+which should be portable across all general purpose RISCV harts.  If &lt;code&gt;_zvl512b&lt;/code&gt; were
+added to the &lt;code&gt;-march&lt;/code&gt; setting, GCC will know that vector registers are bigger and can unroll
+loops more aggressively - generating code that will fail on 128 bit vector harts.  This can
+get complicated when processors have both 128 bit and 512 bit cores, like the sg2380.&lt;/dd&gt;
+&lt;dt&gt;Aren&amp;rsquo;t vector extensions unlikely to be used in programs that don&amp;rsquo;t do vector math?&lt;/dt&gt;
+&lt;dd&gt;No.  Vector extensions are very likely to be found in inlined utilities like memcpy and strncmp.
+Most simple loops over arrays of structs can be optimized with vector instructions.&lt;/dd&gt;
+&lt;/dl&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>

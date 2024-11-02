@@ -1,0 +1,27 @@
+---
+title: Advisor Depenencies
+linkTitle: Dependencies
+weight: 10
+---
+
+## Ghidra
+
+* Ghidra 11.3_DEV with the RISCV-64 [isa_ext](https://github.com/thixotropist/ghidra/tree/isa_ext) branch
+
+## Bazel
+
+* [Bazel 11.4](https://github.com/bazelbuild/bazel/releases)
+
+## Toolchain
+
+* (binutils 2.42.50)[git://sourceware.org/git/binutils-gdb.git.]
+* (gcc 15.0)[git://gcc.gnu.org/git/gcc.git]
+* sysroot - a stripped down linux sysroot
+
+## Jupyter
+
+* jupyterlab 4.1.1
+
+## System
+
+* Fedora 40 with wayland graphics
