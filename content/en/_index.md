@@ -32,6 +32,7 @@ We will use a couple of reference binaries as exemplars for Ghidra analysis:
   like routers and firewalls.  This has very little vector math.  Optimizing compilers can still find a reason to
   translate many simple loops into complex vector instruction sequences.
 
+
 ## Using this site
 
 The simplest way to use this site is to browse through the examples, looking for the patterns in how
@@ -52,5 +53,16 @@ when analyzing a particular executable binary
   like the actual vector length(s) supported in the binary
 * a qemu system emulator configured to implement the target hardware architecture, with any custom kernel modules
   required by the executable.
+
+###  Advanced Usage Scenario
+
+There are a lot of arbitrary decisions in a project like this, so we will pick an overall advanced scenario
+to shape those decisions.
+
+We assume a corporation is evaluating a voice-activated and AI-adaptive router-firewall appliance and
+asked its resident Ghidra user to evaluate its executables.  Initial inspection suggests the vendor has adopted a
+multi-core RISCV-64 processor with vector instructions, a GCC-15 toolchain, and a linux real time OS.  Our Ghidra user
+believes the product under test has library code somewhat similar to `Whisper.cpp` for the voice recognition and AI-adaptive
+elements and `DPDK`-like code for the router/firewall functions.
 
 {{% /blocks/section %}}

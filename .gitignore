@@ -6,6 +6,8 @@ bazel-*
 Samples.db
 .hugo_build.lock
 go.sum
+go.mod
 node_modules
 public/
 resources
+data
