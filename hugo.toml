@@ -1,4 +1,4 @@
-baseURL = 'ghidra_advisor'
+baseURL = 'https://thixotropist.github.io/ghidra_advisor/'
 languageCode = 'en-us'
 title = 'Ghidra Advisor for RISCV-64 Vector Extensions'
 
