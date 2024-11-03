@@ -107,6 +107,9 @@ class OpcodeHandler():
             self.register(op, self.v_slide_handler)
         for op in ('vrgather.vv', 'vrgatherei16.vv'):
             self.register(op, self.v_gather_handler)
+        # finish up with traits
+        if 'has_loop' in self.context:
+            self.significant_opcodes.append("_loop")
 
     def add_label(self, label):
         """
@@ -120,11 +123,11 @@ class OpcodeHandler():
         Add a handler to an instruction
         """
         if instr not in self.dispatch:
-            self.logger.debug(f"register {callback} for instruction {instr}")
+            self.logger.debug("register %s for instruction %s", callback, instr)
             self.dispatch[instr] = [callback,]
         else:
-            self.logger.debug(f"Add the callback {callback} to the " +
-                              f"existing registration for {instr}")
+            self.logger.debug("Add the callback %s to the " +
+                              "existing registration for %s", callback, instr)
             self.dispatch[instr].append(callback)
 
     def invoke(self, addr, instr, operand):
@@ -142,17 +145,18 @@ class OpcodeHandler():
         """
         Handle load immediate instructions
         """
-        self.logger.debug(f"Handling a load immediate instruction {addr}\t{instr}\t{operand}")
+        self.logger.debug("Handling a load immediate instruction %s\t%s\t%s",
+                          addr, instr, operand)
 
     def conditional_branch_handler(self, addr, instr, operand):
         """
         Handle conditional branch instructions
         """
-        self.logger.debug(f"Handling a branch instruction {addr}\t{instr}\t{operand}")
+        self.logger.debug("Handling a branch instruction %s\t%s\t%s",
+                          addr, instr, operand)
         branch_target = self.parser.get_local_branch_target(operand)
         self.logger.debug("Looking for the branch target %s", branch_target)
         if branch_target in self.local_labels or branch_target in self.local_addresses:
-            self.significant_opcodes.append(instr)
             self.logger.debug("Adding a loop detection to the context report")
             self.context['has_loop'] = True
 
@@ -347,18 +351,17 @@ class OpcodeHandler():
         if instr in ('vrgather.vv', 'vrgatherei16.vv'):
             self.report.add(f"* Vector gather: {instr}")
 
-
     def summary_report(self):
         """
         Generate a report 
         """
         report = []
+        if 'has_loop' in self.context:
+            report.append("* At least one loop exists")
         self.base_opcode_signature = ','.join(self.significant_opcodes)
-        report.append(f"* Significant opcodes, in the order they appear:\n    * {self.base_opcode_signature}")
+        report.append(f"* Significant operations, in the order they appear:\n    * {self.base_opcode_signature}")
         tmp = self.significant_opcodes
         tmp.sort()
         self.sorted_opcode_signature = ','.join(tmp)
-        report.append(f"* Significant opcodes, in alphanumeric order:\n    * {self.sorted_opcode_signature}")
-        if 'has_loop' in self.context:
-            report.append("* At least one loop exists")
+        report.append(f"* Significant operations, in alphanumeric order:\n    * {self.sorted_opcode_signature}")
         return report

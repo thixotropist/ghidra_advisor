@@ -279,13 +279,13 @@ class T3Signatures(unittest.TestCase):
         000a9594 e3 49 65 fa     blt      a0,t1,LAB_000a9546
         """
         analyzer = Analysis(forward_branch, DisassemblyMode.GHIDRA)
-        traits = analyzer.get_signature('traits')
-        self.assertEqual(traits, 'has_no_loop',
-                        "Traits should not react to forward branches")
+        sigs = analyzer.get_signature('Opcodes, sorted')
+        self.assertNotIn('_loop', sigs,
+                        "The absence of loops should be identified")
         analyzer = Analysis(loop_branch, DisassemblyMode.GHIDRA)
-        traits = analyzer.get_signature('traits')
-        self.assertEqual(traits, 'has_loop',
-                        "Traits should identify loop branches")
+        sigs = analyzer.get_signature('Opcodes, sorted')
+        self.assertIn('_loop', sigs,
+                        "Loops should be identified")
 
     def test_102_objdump_analysis(self):
         """
@@ -299,20 +299,14 @@ class T3Signatures(unittest.TestCase):
     1184:       fed762e3 bltu    a4,a3,1168 <reduc_plus_int8_t+0x18>
         """
         analyzer = Analysis(forward_branch, DisassemblyMode.OBJDUMP)
-        traits = analyzer.get_signature('traits')
-        self.assertEqual(traits, 'has_no_loop',
-                        "Traits should not react to forward branches")
-        opcodes = analyzer.opcode_handler.significant_opcodes
-        self.assertNotIn('blez', opcodes,
-                         'Forward branch is mistakenly considered significant')
+        sigs = analyzer.get_signature('Opcodes, sorted')
+        self.assertNotIn('_loop', sigs,
+                        "Forward branches should not be considered loops")
 
         analyzer = Analysis(loop_branch, DisassemblyMode.OBJDUMP)
-        traits = analyzer.get_signature('traits')
-        self.assertEqual(traits, 'has_loop',
-                        "Traits should identify loop branches")
-        opcodes = analyzer.opcode_handler.significant_opcodes
-        self.assertIn('bltu', opcodes,
-                         'Backwards branch is not marked as significant')
+        sigs = analyzer.get_signature('Opcodes, sorted')
+        self.assertIn('_loop', sigs,
+                        "Loops should be identified")
 
     def test_110_ghidra(self):
         """
@@ -322,17 +316,14 @@ class T3Signatures(unittest.TestCase):
             disassembly = f.read()
         ghidra_analyzer = Analysis(disassembly, DisassemblyMode.GHIDRA)
         ghidra_analyzer.opcode_handler.summary_report()
-        traits = ghidra_analyzer.get_signature('traits')
         opcodes_sorted = ghidra_analyzer.opcode_handler.sorted_opcode_signature
         opcodes_ordered = ghidra_analyzer.opcode_handler.base_opcode_signature
-        self.assertEqual(opcodes_sorted, 'blt,vle8.v,vle8.v,vmv.v.i,vmv.x.s,vsetivli,vsetvli,' +
+        self.assertEqual(opcodes_sorted, '_loop,vle8.v,vle8.v,vmv.v.i,vmv.x.s,vsetivli,vsetvli,' +
                          'vsetvli,vsetvli,vsetvli,vwmul.vv,vwredsum.vs',
                          'Found incorrect opcodes_sorted signature extracted from Ghidra test')
         self.assertEqual(opcodes_ordered, 'vsetvli,vsetvli,vmv.v.i,vsetvli,vle8.v,vle8.v,' +
-                         'vwmul.vv,vsetvli,vwredsum.vs,vsetivli,vmv.x.s,blt',
+                         'vwmul.vv,vsetvli,vwredsum.vs,vsetivli,vmv.x.s,_loop',
                          'Found incorrect opcodes_ordered signature extracted from Ghidra test')
-        self.assertEqual(traits,'has_loop',
-                        'Found incorrect traits signature extracted from Ghidra test')
 
     def test_120_objdump(self):
         """
@@ -342,23 +333,23 @@ class T3Signatures(unittest.TestCase):
             disassembly = f.read()
         objdump_analyzer = Analysis(disassembly, DisassemblyMode.OBJDUMP)
         objdump_analyzer.opcode_handler.summary_report()
-        traits = objdump_analyzer.get_signature('traits')
         opcodes_sorted = objdump_analyzer.opcode_handler.sorted_opcode_signature
         opcodes_ordered = objdump_analyzer.opcode_handler.base_opcode_signature
-        self.assertEqual(opcodes_sorted, 'bltu,vadd.vv,vle8.v,vmv.s.x,vmv.v.i,vmv.x.s,vredsum.vs,' +
-                         'vsetvli,vsetvli,vsetvli,vslide1up.vx',
+        self.assertEqual(opcodes_sorted, '_loop,vadd.vv,vle8.v,vmv.s.x,vmv.v.i,vmv.x.s' +
+                         ',vredsum.vs,vsetvli,vsetvli,vsetvli,vslide1up.vx',
                          'Found incorrect opcodes_sorted signature extracted from objdump test')
         self.assertEqual(opcodes_ordered, 'vsetvli,vmv.v.i,vslide1up.vx,vsetvli,vle8.v,' +
-                         'vadd.vv,bltu,vsetvli,vmv.s.x,vredsum.vs,vmv.x.s',
+                         'vadd.vv,vsetvli,vmv.s.x,vredsum.vs,vmv.x.s,_loop',
                          'Found incorrect opcodes_ordered signature extracted from objdump test')
-        self.assertEqual(traits,'has_loop',
-                        'Found incorrect traits signature extracted from objdump test')
 
 class T4Advisor(unittest.TestCase):
     """
     Exercise the Advisor class
     """
     def test_01_loop(self):
+        """
+        Generate a report, no tests
+        """
         with open("data_test/advisor_tests/loop1.ghidra", "r", encoding="utf8") as f:
             sample = f.read()
         advisor = Advisor(sample)
