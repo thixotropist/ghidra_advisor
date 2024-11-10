@@ -91,7 +91,8 @@ class OpcodeHandler():
         for op in opcodes.CONDITIONAL_BRANCH_OPCODES:
             self.register(op, self.conditional_branch_handler)
         for op in ('vmv1r.v', 'vmv2r.v', 'vmv4r.v', 'vmv8r.v',
-                   'vfmv.s.f', 'vfmv.f.s'):
+                   'vmv.v.i', 'vmv.v.v', 'vmv.v.x', 'vmv.x.s',
+                   'vmv.s.x', 'vfmv.s.f', 'vfmv.f.s'):
             self.register(op, self.vmv_handler)
         for op in ('vredsum.vs', 'vredmaxu.vs', 'vredmax.vs',
                      'vredminu.vs', 'vredmin.vs', 'vredand.vs',
@@ -299,6 +300,26 @@ class OpcodeHandler():
             if mul != '1':
                 self.report.add("    * Multiple vector registers are moved")
             return
+        if instr in ('vmv.v.i'):
+            self.report.add(f"* Vector register move/copy: {instr}")
+            self.report.add("    * vd[i] = imm")
+            return
+        if instr in ('vmv.v.v'):
+            self.report.add(f"* Vector register move/copy: {instr}")
+            self.report.add("    * vd[i] = vs1[i]")
+            return
+        if instr in ('vmv.v.x'):
+            self.report.add(f"* Vector register move/copy: {instr}")
+            self.report.add("    * vd[i] = x[rs1]")
+            return
+        if instr in ('vmv.x.s'):
+            self.report.add(f"* Vector register move/copy: {instr}")
+            self.report.add("    * [rd] = vs2[0] (vs1=0)")
+            return
+        if instr in ('vmv.s.x'):
+            self.report.add(f"* Vector register move/copy: {instr}")
+            self.report.add("    * vd[0] = x[rs1] (vs2=0)")
+            return
         if instr == 'vfmv.s.f':
             self.report.add("* FP register to vector register element 0")
             return
@@ -327,20 +348,39 @@ class OpcodeHandler():
         """
         The slide instructions move elements up and down a vector register group
         """
-        if instr in ('vslideup.vx', 'vslideup.vi'):
+        if instr in ('vslideup.vx'):
             self.report.add(f"* Vector integer slideup: {instr}")
+            self.report.add("    * vd[i+x[rs1]] = vs2[i]")
             return
-        if instr in ('vslidedown.vx', 'vslidedown.vi'):
+        if instr in ('vslideup.vi'):
+            self.report.add(f"* Vector integer slideup: {instr}")
+            self.report.add("    * vd[i+uimm] = vs2[i]")
+            return
+        if instr in ('vslidedown.vx'):
             self.report.add(f"* Vector integer slidedown: {instr}")
+            self.report.add("    * vd[i] = vs2[i+x[rs1]]")
             return
+        if instr in ('vslidedown.vi'):
+            self.report.add(f"* Vector integer slidedown: {instr}")
+            self.report.add("    * vd[i] = vs2[i+uimm]")
+            return       
         if instr in ('vslide1up.vx'):
             self.report.add(f"* Vector integer slide1up: {instr}")
+            self.report.add("    * vd[0]=x[rs1], vd[i+1] = vs2[i]")
             return
         if instr in ('vslide1down.vx'):
             self.report.add(f"* Vector integer slide1down: {instr}")
+            self.report.add("    * The vslide1down instruction copies the first vl-1 " + 
+                            "active elements values from index i+1 in the source vector " +
+                            "register group to index i in the destination vector register group.")
             return
-        if instr in ('vfslide1up.vf', 'vfslide1down.vf'):
-            self.report.add(f"* Vector floating point slide: {instr}")
+        if instr in ('vfslide1up.vf'):
+            self.report.add(f"* Vector floating point slide 1 up: {instr}")
+            self.report.add("    * vd[0]=f[rs1], vd[i+1] = vs2[i]")
+            return
+        if instr in ('vfslide1down.vf'):
+            self.report.add(f"* Vector floating point slide 1 down: {instr}")
+            self.report.add("    * vd[i] = vs2[i+1], vd[vl-1]=f[rs1]")
  
     def v_gather_handler(self, _addr, instr, _operand):
         """
@@ -358,6 +398,8 @@ class OpcodeHandler():
         report = []
         if 'has_loop' in self.context:
             report.append("* At least one loop exists")
+        else:
+            report.append("* No loop detected - this may be an optimization of scalar initialization code")
         self.base_opcode_signature = ','.join(self.significant_opcodes)
         report.append(f"* Significant operations, in the order they appear:\n    * {self.base_opcode_signature}")
         tmp = self.significant_opcodes
