@@ -1,7 +1,7 @@
 ---
 title: Whisper Exploration Example
 linkTitle: Whisper Exploration
-weight: 100
+weight: 20
 ---
 
 How do we move forward when the Advisor doesn't provide a lot of help?  We'll start with an example

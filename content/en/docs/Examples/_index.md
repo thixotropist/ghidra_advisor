@@ -1,6 +1,6 @@
 ---
 title: Ghidra Advisor Examples
-linkTitle: Documents
+linkTitle: Examples
 weight: 10
 ---
 
