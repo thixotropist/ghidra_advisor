@@ -11,7 +11,7 @@ Without this branch Ghidra is stuck with a never-ratified older version of RISCV
 
 ## Bazel
 
-* [Bazel 11.4](https://github.com/bazelbuild/bazel/releases)
+* [Bazel 7.4](https://github.com/bazelbuild/bazel/releases)
 
 Bazel builds in this workspace generate output in the temporary directory /run/user/1000/bazel, as specified in .bazelrc.
 This override can be changed or removed. 

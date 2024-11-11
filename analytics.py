@@ -50,6 +50,9 @@ class Analysis():
                     label = m.group(1)
                     self.logger.debug("Found an interior label: %s", m.group(1))
                     self.opcode_handler.add_label(label)
+        # finish by adding traits
+        if 'has_loop' in self.opcode_handler.context:
+            self.opcode_handler.significant_opcodes.append('_loop')
 
     def display(self):
         """
@@ -71,10 +74,6 @@ class Analysis():
         """
         return a single signature name and signature
         """
-        if name == 'traits':
-            if 'has_loop' in self.opcode_handler.context:
-                return 'has_loop'
-            return 'has_no_loop'
         if name == 'Opcodes, ordered':
             return ','.join(self.opcode_handler.significant_opcodes)
         if name == 'Opcodes, sorted':
@@ -86,7 +85,6 @@ class Analysis():
     def get_signatures(self):
         "Return the collected signatures as a dict"
         sigs = {}
-        sigs['traits'] = self.get_signature('traits')
         sigs['Opcodes, ordered'] = self.get_signature('Opcodes, ordered')
         sigs['Opcodes, sorted'] = self.get_signature('Opcodes, sorted')
         return sigs

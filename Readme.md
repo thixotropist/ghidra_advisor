@@ -1,6 +1,6 @@
 # README
 
->Note: The complete documentation for this project will eventually be held as a hugo website.
+>Note: The complete documentation for this project can be found at https://thixotropist.github.io/ghidra_advisor/
 
 What tool might help Ghidra users interpret confusing listing and decompiler views?
 Modern compilers can optimize simple C code into confusing instruction sequences.
