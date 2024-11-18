@@ -13,7 +13,7 @@ Without this branch Ghidra is stuck with a never-ratified older version of RISCV
 
 * [Bazel 7.4](https://github.com/bazelbuild/bazel/releases)
 
-Bazel builds in this workspace generate output in the temporary directory /run/user/1000/bazel, as specified in .bazelrc.
+Bazel builds in this workspace generate output in the temporary directory `/run/user/1000/bazel`, as specified in `.bazelrc`.
 This override can be changed or removed. 
 
 ## Toolchain
@@ -35,7 +35,7 @@ Two qemu emulators are used, both built from source shortly after the 9.0.50 rel
 * `qemu-riscv64` provides user space emulation, which is very useful for exploring the behavior of
   particularly confusing assembly code sequences.
 * `qemu-system-riscv64` provides full RISCV-64 VM hosting.  This is more narrowly useful when testing
-  binaries that require non-standard kernel options or kernel modules.
+  binaries like DPDK which require non-standard kernel options or kernel modules.
     * The RISCV-64 VM used here is based on an Ubuntu 24.04 disk image and the `u-boot.bin` boot loader.
       This boot loader is critical for RISCV VMs, since the emulated BIOS firmware provides the kernel
       with the definitive set of RISCV extensions available to the hardware threads (aka harts)

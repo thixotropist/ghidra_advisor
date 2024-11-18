@@ -6,6 +6,18 @@ module(
 bazel_dep(name="gcc_riscv_suite", version="15.0.0")
 bazel_dep(name="fedora_syslibs", version="40.0.0")
 
+http_archive = use_repo_rule("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+# whisper.cpp is an open source voice-to-text inference app built on Meta's LLaMA model.
+# It is a useful exemplar of autovectorization of ML code with some examples of hand-coded
+# riscv intrinsics.
+http_archive(
+    name = "whisper_cpp",
+    urls = ["https://github.com/ggerganov/whisper.cpp/archive/refs/tags/v1.7.1.tar.gz"],
+    strip_prefix = "whisper.cpp-1.7.1/",
+    build_file = "//:whisper-cpp.BUILD",
+    sha256 = "97f19a32212f2f215e538ee37a16ff547aaebc54817bd8072034e02466ce6d55"
+)
+
 register_toolchains(
     # a riscv 64 bit toolchain built with the latest Gnu Compiler Suite
     "//toolchains:riscv64-gcc",
