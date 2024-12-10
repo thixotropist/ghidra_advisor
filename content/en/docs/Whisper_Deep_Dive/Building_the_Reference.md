@@ -82,20 +82,16 @@ Now we can build the reference app using our existing RISCV-64 toolchain:
 ```text
 $ bazel build --platforms=//platforms:riscv_gcc --copt='-march=rv64gcv' @whisper_cpp//:main
 ...
-$ file bazel-bin/external/_main~_repo_rules~whisper_cpp/main
-bazel-bin/external/_main~_repo_rules~whisper_cpp/main: ELF 64-bit LSB executable, \
-UCB RISC-V, RVC, double-float ABI, version 1 (GNU/Linux), \
-dynamically linked, interpreter /lib/ld-linux-riscv64-lp64d.so.1, \
-for GNU/Linux 4.15.0, not stripped
+$ file bazel-bin/external/+_repo_rules+whisper_cpp/main
+bazel-bin/external/+_repo_rules+whisper_cpp/main: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-riscv64-lp64d.so.1, for GNU/Linux 4.15.0, not stripped
 
-$ readelf -A bazel-bin/external/_main~_repo_rules~whisper_cpp/main
+$ readelf -A bazel-bin/external/+_repo_rules+whisper_cpp/main
 Attribute Section: riscv
 File Attributes
   Tag_RISCV_stack_align: 16-bytes
-  Tag_RISCV_arch: "rv64i2p1_m2p0_a2p1_f2p2_d2p2_c2p0_v1p0_zicsr2p0_zifencei2p0_zmmul1p0_zaamo1p0_zalrsc1p0_zve32f1p0_zve32x1p0_zve64d1p0_zve64f1p0_zve64x1p0_zvl128b1p0_zvl32b1p0_zvl64b1p0"
+  Tag_RISCV_arch: "rv64i2p1_m2p0_a2p1_f2p2_d2p2_c2p0_v1p0_zicsr2p0_zifencei2p0_zmmul1p0_zaamo1p0_zalrsc1p0_zca1p0_zcd1p0_zve32f1p0_zve32x1p0_zve64d1p0_zve64f1p0_zve64x1p0_zvl128b1p0_zvl32b1p0_zvl64b1p0"
   Tag_RISCV_priv_spec: 1
   Tag_RISCV_priv_spec_minor: 11
-
 ```
 
 The final step is to locate the toolchain libraries used in this build, so that we can load them into Ghidra.  They are usually cached in a per-user
@@ -111,10 +107,10 @@ release: release 7.4.0
 ...
 $ find /run/user/1000 -name libstdc++\*
 ...
-/run/user/1000/bazel/external/gcc_riscv_suite~/riscv64-unknown-linux-gnu/lib/libstdc++.so.6.0.33
+/run/user/1000/bazel/external/gcc_riscv_suite+/riscv64-unknown-linux-gnu/lib/libstdc++.so.6.0.33
 ...
-/run/user/1000/bazel/external/gcc_riscv_suite~/riscv64-unknown-linux-gnu/lib/libstdc++.so.6
-/run/user/1000/bazel/external/gcc_riscv_suite~/riscv64-unknown-linux-gnu/lib/libstdc++.so
+/run/user/1000/bazel/external/gcc_riscv_suite+/riscv64-unknown-linux-gnu/lib/libstdc++.so.6
+/run/user/1000/bazel/external/gcc_riscv_suite+/riscv64-unknown-linux-gnu/lib/libstdc++.so
 ```
 
-We will want to load libstdc++.so.6 into Ghidra before we load the reference app.
+We will want to load `libstdc++.so.6` into Ghidra before we load the reference app.

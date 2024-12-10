@@ -183,7 +183,7 @@ class T2ImportTestSuites(unittest.TestCase):
             result = self.bazel.execute(platform, target, copt="-march=rv64gc",
                                     operation='build', mode='opt')
             self.assertEqual(0, result.returncode,
-                f'bazel {platform} build of{target} failed')
+                f'bazel {platform} build of {target} failed')
         result = subprocess.run(['readelf', '-A',
                                  'bazel-bin/gcc_riscv_testsuite/rvv/autovec/reduc/libreduc-1_rv64gc.so'],
             check=True, capture_output=True, encoding='utf8')

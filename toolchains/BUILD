@@ -6,16 +6,17 @@ package(default_visibility = ["//visibility:public"])
 # These should match a dependency named in MODULE.bazel
 SUITE_MODULE = "gcc_riscv_suite"
 
+# This is the gcc version, not the bazel gcc_riscv_suite module version
 SUITE_VERSION = "15.0.0"
 
 # the binutils, gcc, and glibc configuration target
 SUITE_TARGET = "riscv64-unknown-linux-gnu"
 
 # Bazel currently makes the imported module available at this file system location
-PATH_TO_MODULE = OUTPUT_BASE + "/external/" + SUITE_MODULE + "~"
+PATH_TO_MODULE = OUTPUT_BASE + "/external/" + SUITE_MODULE + "+"
 
 # compiler and linker need to know the imported location of sysroot
-SYSROOT = "external/" + SUITE_MODULE + "~/"
+SYSROOT = "external/" + SUITE_MODULE + "+/"
 
 # Generate the set of sandbox filesystem directories containing system include files
 BUILTIN_INCLUDE_DIRS = [
@@ -29,25 +30,25 @@ BUILTIN_INCLUDE_DIRS = [
 # a generic RISCV 64 hart supporting march=rv64gc
 constraint_value(
     name = "riscv64",
-    constraint_setting = "@platforms//cpu",
+    constraint_setting = "@@platforms//cpu",
 )
 
 # a vector RISCV 64 hart supporting march=rv64gcv
 constraint_value(
     name = "riscv64-v",
-    constraint_setting = "@platforms//cpu",
+    constraint_setting = "@@platforms//cpu",
 )
 
 # a customized RISCV 64 hart supporting march=rv64gcv plus other extensions supported by binutils
 constraint_value(
     name = "riscv64-c",
-    constraint_setting = "@platforms//cpu",
+    constraint_setting = "@@platforms//cpu",
 )
 
 # a local (non-hermetic) toolchain platform for sandbox debugging
 constraint_value(
     name = "riscv64-l",
-    constraint_setting = "@platforms//cpu",
+    constraint_setting = "@@platforms//cpu",
 )
 
 filegroup(
@@ -95,7 +96,7 @@ toolchain(
         ":riscv64",
     ],
     toolchain = ":riscv64-gcc-toolchain",
-    toolchain_type = "@bazel_tools//tools/cpp:toolchain_type",
+    toolchain_type = "@@bazel_tools//tools/cpp:toolchain_type",
 )
 
 cc_toolchain(

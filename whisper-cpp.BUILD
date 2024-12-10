@@ -2,8 +2,9 @@ package(default_visibility = ["//visibility:public"])
 
 # Converting the whisper_cpp tarball into a Bazel module
 # makes finding include files a bit more complicated.
+# This path tends to change with each major version of Bazel
 #
-EXTERNAL_PATH = "external/_main~_repo_rules~whisper_cpp"
+EXTERNAL_PATH = "external/+_repo_rules+whisper_cpp"
 
 cc_library(
     name = "whisper",

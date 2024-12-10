@@ -11,10 +11,13 @@ Without this branch Ghidra is stuck with a never-ratified older version of RISCV
 
 ## Bazel
 
-* [Bazel 7.4](https://github.com/bazelbuild/bazel/releases)
+* [Bazel 8.0](https://github.com/bazelbuild/bazel/releases)
 
 Bazel builds in this workspace generate output in the temporary directory `/run/user/1000/bazel`, as specified in `.bazelrc`.
-This override can be changed or removed. 
+This override can be changed or removed
+
+This project should work with Bazel 7.x as well, after adjusting some toolchain path names.  Bazel 8 uses '+' instead of '~'
+as an external repo naming suffix and '@@' instead of '@' to identify standard bazel repositories.
 
 ## Toolchain
 
@@ -24,8 +27,9 @@ This override can be changed or removed.
 * sysroot - a stripped down linux sysroot derived from the sysroot bootstrap in
   [riscv-gnu-toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain)
 
-The toolchain is packaged locally as a Bazel module named `gcc_riscv_suite`, version 15.0.0.
-This module depends on a second module, `fedora_syslibs` version 40.0.0.  These are served out of a local
+The toolchain is packaged locally as a Bazel module named `gcc_riscv_suite`, version 15.0.0.1.
+(Note that this is the first patch to the Bazel module based on the unreleased `GCC-15.0.0`).
+This module depends on a second module, `fedora_syslibs` version 41.0.0.  These are served out of a local
 Bazel module repository.
 The `gcc_riscv_suite` and `fedora_syslibs` modules wrap a 42 MB and 4.0 MB tarball, respectively.
 
@@ -46,5 +50,5 @@ Two qemu emulators are used, both built from source shortly after the 9.0.50 rel
 
 ## System
 
-* Fedora 40 with wayland graphics.
-* Python 3
+* Fedora 41 with wayland graphics.
+* Python 3.13
