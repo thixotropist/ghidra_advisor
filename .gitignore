@@ -10,3 +10,8 @@ go.mod
 node_modules
 resources
 data
+# scratch ghidra repos
+whisper.gpr
+whisper.lock
+whisper.rep/*
+riscv_c++lib.gdt

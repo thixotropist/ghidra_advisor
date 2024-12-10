@@ -55,7 +55,7 @@ Opcodes, ordered
 
 ## Querying the Database in Advisor
 
-{{< figure src="Workflow_advisor.svg" width="80%">}}
+![Workflow Generation](../Workflow_generation.svg)
 
 Users can select assembly code from Ghidra's listing window, then run analysis cells in `Advisor.ipynb` to generate reports
 on the types of C code that may match the listing.  Users will likely want to iterate complex selections by adding custom

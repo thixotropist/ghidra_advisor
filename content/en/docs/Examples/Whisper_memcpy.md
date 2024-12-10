@@ -37,7 +37,7 @@ This source example shows a few traits:
 
 GCC 15 compiles the lambda stored in loader.read as
 `whisper_init_from_buffer_with_params_no_state::{lambda(void*,void*,unsigned_long)#1}::_FUN`.
-The relevant instruction sequence (trimmed of address and whitespace) is:
+The relevant Ghidra listing window instruction sequence (trimmed of address and whitespace) is:
 
 ```as
 LAB_000b0be2

@@ -11,10 +11,13 @@ Without this branch Ghidra is stuck with a never-ratified older version of RISCV
 
 ## Bazel
 
-* [Bazel 7.4](https://github.com/bazelbuild/bazel/releases)
+* [Bazel 8.0](https://github.com/bazelbuild/bazel/releases)
 
-Bazel builds in this workspace generate output in the temporary directory /run/user/1000/bazel, as specified in .bazelrc.
-This override can be changed or removed. 
+Bazel builds in this workspace generate output in the temporary directory `/run/user/1000/bazel`, as specified in `.bazelrc`.
+This override can be changed or removed
+
+This project should work with Bazel 7.x as well, after adjusting some toolchain path names.  Bazel 8 uses '+' instead of '~'
+as an external repo naming suffix and '@@' instead of '@' to identify standard bazel repositories.
 
 ## Toolchain
 
@@ -24,8 +27,9 @@ This override can be changed or removed.
 * sysroot - a stripped down linux sysroot derived from the sysroot bootstrap in
   [riscv-gnu-toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain)
 
-The toolchain is packaged locally as a Bazel module named `gcc_riscv_suite`, version 15.0.0.
-This module depends on a second module, `fedora_syslibs` version 40.0.0.  These are served out of a local
+The toolchain is packaged locally as a Bazel module named `gcc_riscv_suite`, version 15.0.0.1.
+(Note that this is the first patch to the Bazel module based on the unreleased `GCC-15.0.0`).
+This module depends on a second module, `fedora_syslibs` version 41.0.0.  These are served out of a local
 Bazel module repository.
 The `gcc_riscv_suite` and `fedora_syslibs` modules wrap a 42 MB and 4.0 MB tarball, respectively.
 
@@ -35,7 +39,7 @@ Two qemu emulators are used, both built from source shortly after the 9.0.50 rel
 * `qemu-riscv64` provides user space emulation, which is very useful for exploring the behavior of
   particularly confusing assembly code sequences.
 * `qemu-system-riscv64` provides full RISCV-64 VM hosting.  This is more narrowly useful when testing
-  binaries that require non-standard kernel options or kernel modules.
+  binaries like DPDK which require non-standard kernel options or kernel modules.
     * The RISCV-64 VM used here is based on an Ubuntu 24.04 disk image and the `u-boot.bin` boot loader.
       This boot loader is critical for RISCV VMs, since the emulated BIOS firmware provides the kernel
       with the definitive set of RISCV extensions available to the hardware threads (aka harts)
@@ -46,5 +50,5 @@ Two qemu emulators are used, both built from source shortly after the 9.0.50 rel
 
 ## System
 
-* Fedora 40 with wayland graphics.
-* Python 3
+* Fedora 41 with wayland graphics.
+* Python 3.13
