@@ -18,27 +18,27 @@
 <link rel="icon" type="image/png" href="/ghidra_advisor/favicons/android-192x192.png" sizes="192x192">
 
 <title>Advisor Dependencies | Ghidra Advisor for RISCV-64 Vector Extensions</title>
-<meta name="description" content="Ghidra Ghidra 11.3_DEV with the RISCV-64 isa_ext branch. Without this branch Ghidra is stuck with a never-ratified older version of RISCV support. Bazel Bazel 11.4 Bazel builds in this workspace generate output in the temporary directory /run/user/1000/bazel, as specified in .bazelrc. This override can be changed or removed.
-Toolchain binutils 2.42.50 gcc 15.0 glibc developmental version 2.39.9000 sysroot - a stripped down linux sysroot derived from the sysroot bootstrap in riscv-gnu-toolchain The toolchain is packaged locally as a Bazel module named gcc_riscv_suite, version 15.0.0. This module depends on a second module, fedora_syslibs version 40.0.0. These are served out of a local Bazel module repository. The gcc_riscv_suite and fedora_syslibs modules wrap a 42 MB and 4.0 MB tarball, respectively.">
+<meta name="description" content="Ghidra Ghidra 11.3_DEV with the RISCV-64 isa_ext branch. Without this branch Ghidra is stuck with a never-ratified older version of RISCV support. Bazel Bazel 8.0 Bazel builds in this workspace generate output in the temporary directory /run/user/1000/bazel, as specified in .bazelrc. This override can be changed or removed
+This project should work with Bazel 7.x as well, after adjusting some toolchain path names. Bazel 8 uses &lsquo;&#43;&rsquo; instead of &lsquo;~&rsquo; as an external repo naming suffix and &lsquo;@@&rsquo; instead of &lsquo;@&rsquo; to identify standard bazel repositories.">
 <meta property="og:url" content="https://thixotropist.github.io/ghidra_advisor/docs/developer_reference/dependencies/">
   <meta property="og:site_name" content="Ghidra Advisor for RISCV-64 Vector Extensions">
   <meta property="og:title" content="Advisor Dependencies">
-  <meta property="og:description" content="Ghidra Ghidra 11.3_DEV with the RISCV-64 isa_ext branch. Without this branch Ghidra is stuck with a never-ratified older version of RISCV support. Bazel Bazel 11.4 Bazel builds in this workspace generate output in the temporary directory /run/user/1000/bazel, as specified in .bazelrc. This override can be changed or removed.
-Toolchain binutils 2.42.50 gcc 15.0 glibc developmental version 2.39.9000 sysroot - a stripped down linux sysroot derived from the sysroot bootstrap in riscv-gnu-toolchain The toolchain is packaged locally as a Bazel module named gcc_riscv_suite, version 15.0.0. This module depends on a second module, fedora_syslibs version 40.0.0. These are served out of a local Bazel module repository. The gcc_riscv_suite and fedora_syslibs modules wrap a 42 MB and 4.0 MB tarball, respectively.">
+  <meta property="og:description" content="Ghidra Ghidra 11.3_DEV with the RISCV-64 isa_ext branch. Without this branch Ghidra is stuck with a never-ratified older version of RISCV support. Bazel Bazel 8.0 Bazel builds in this workspace generate output in the temporary directory /run/user/1000/bazel, as specified in .bazelrc. This override can be changed or removed
+This project should work with Bazel 7.x as well, after adjusting some toolchain path names. Bazel 8 uses ‘&#43;’ instead of ‘~’ as an external repo naming suffix and ‘@@’ instead of ‘@’ to identify standard bazel repositories.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
-    <meta property="article:modified_time" content="2024-11-02T15:00:04-04:00">
+    <meta property="article:modified_time" content="2024-12-10T12:36:58-05:00">
 
   <meta itemprop="name" content="Advisor Dependencies">
-  <meta itemprop="description" content="Ghidra Ghidra 11.3_DEV with the RISCV-64 isa_ext branch. Without this branch Ghidra is stuck with a never-ratified older version of RISCV support. Bazel Bazel 11.4 Bazel builds in this workspace generate output in the temporary directory /run/user/1000/bazel, as specified in .bazelrc. This override can be changed or removed.
-Toolchain binutils 2.42.50 gcc 15.0 glibc developmental version 2.39.9000 sysroot - a stripped down linux sysroot derived from the sysroot bootstrap in riscv-gnu-toolchain The toolchain is packaged locally as a Bazel module named gcc_riscv_suite, version 15.0.0. This module depends on a second module, fedora_syslibs version 40.0.0. These are served out of a local Bazel module repository. The gcc_riscv_suite and fedora_syslibs modules wrap a 42 MB and 4.0 MB tarball, respectively.">
-  <meta itemprop="dateModified" content="2024-11-02T15:00:04-04:00">
-  <meta itemprop="wordCount" content="233">
+  <meta itemprop="description" content="Ghidra Ghidra 11.3_DEV with the RISCV-64 isa_ext branch. Without this branch Ghidra is stuck with a never-ratified older version of RISCV support. Bazel Bazel 8.0 Bazel builds in this workspace generate output in the temporary directory /run/user/1000/bazel, as specified in .bazelrc. This override can be changed or removed
+This project should work with Bazel 7.x as well, after adjusting some toolchain path names. Bazel 8 uses ‘&#43;’ instead of ‘~’ as an external repo naming suffix and ‘@@’ instead of ‘@’ to identify standard bazel repositories.">
+  <meta itemprop="dateModified" content="2024-12-10T12:36:58-05:00">
+  <meta itemprop="wordCount" content="289">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Advisor Dependencies">
-  <meta name="twitter:description" content="Ghidra Ghidra 11.3_DEV with the RISCV-64 isa_ext branch. Without this branch Ghidra is stuck with a never-ratified older version of RISCV support. Bazel Bazel 11.4 Bazel builds in this workspace generate output in the temporary directory /run/user/1000/bazel, as specified in .bazelrc. This override can be changed or removed.
-Toolchain binutils 2.42.50 gcc 15.0 glibc developmental version 2.39.9000 sysroot - a stripped down linux sysroot derived from the sysroot bootstrap in riscv-gnu-toolchain The toolchain is packaged locally as a Bazel module named gcc_riscv_suite, version 15.0.0. This module depends on a second module, fedora_syslibs version 40.0.0. These are served out of a local Bazel module repository. The gcc_riscv_suite and fedora_syslibs modules wrap a 42 MB and 4.0 MB tarball, respectively.">
+  <meta name="twitter:description" content="Ghidra Ghidra 11.3_DEV with the RISCV-64 isa_ext branch. Without this branch Ghidra is stuck with a never-ratified older version of RISCV support. Bazel Bazel 8.0 Bazel builds in this workspace generate output in the temporary directory /run/user/1000/bazel, as specified in .bazelrc. This override can be changed or removed
+This project should work with Bazel 7.x as well, after adjusting some toolchain path names. Bazel 8 uses ‘&#43;’ instead of ‘~’ as an external repo naming suffix and ‘@@’ instead of ‘@’ to identify standard bazel repositories.">
 
 
 
@@ -86,12 +86,18 @@ Toolchain binutils 2.42.50 gcc 15.0 glibc developmental version 2.39.9000 sysroo
   <a href="/ghidra_advisor/docs/" title="Ghidra Advisor Reference" class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id="m-ghidra_advisordocs"><span class="">Documents</span></a>
   <ul class="ul-1">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-ghidra_advisordocsexamples-li">
-  <a href="/ghidra_advisor/docs/examples/" title="Ghidra Advisor Examples" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-ghidra_advisordocsexamples"><span class="">Documents</span></a>
+  <a href="/ghidra_advisor/docs/examples/" title="Ghidra Advisor Examples" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-ghidra_advisordocsexamples"><span class="">Examples</span></a>
   <ul class="ul-2 foldable">
     <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ghidra_advisordocsexampleswhisper_main_example-li">
   <a href="/ghidra_advisor/docs/examples/whisper_main_example/" title="Whisper.cpp Example" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ghidra_advisordocsexampleswhisper_main_example"><span class="">Whisper Example</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ghidra_advisordocsexamplesdpdk_example-li">
   <a href="/ghidra_advisor/docs/examples/dpdk_example/" title="DPDK Network Example" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ghidra_advisordocsexamplesdpdk_example"><span class="">DPDK Example</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ghidra_advisordocsexampleswhisper_exploration_1-li">
+  <a href="/ghidra_advisor/docs/examples/whisper_exploration_1/" title="Whisper Exploration Example" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ghidra_advisordocsexampleswhisper_exploration_1"><span class="">Whisper Exploration</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ghidra_advisordocsexampleswhisper_memcpy-li">
+  <a href="/ghidra_advisor/docs/examples/whisper_memcpy/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ghidra_advisordocsexampleswhisper_memcpy"><span class="">Whisper Memcpy</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ghidra_advisordocsexampleswhisper_output_forensics-li">
+  <a href="/ghidra_advisor/docs/examples/whisper_output_forensics/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ghidra_advisordocsexampleswhisper_output_forensics"><span class="">Whisper Output Forensics</span></a>
 </li>
   </ul>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id="m-ghidra_advisordocsdeveloper_reference-li">
@@ -105,6 +111,19 @@ Toolchain binutils 2.42.50 gcc 15.0 glibc developmental version 2.39.9000 sysroo
   <a href="/ghidra_advisor/docs/developer_reference/feature_analysis/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ghidra_advisordocsdeveloper_referencefeature_analysis"><span class="">Feature Analysis</span></a>
 </li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ghidra_advisordocsdeveloper_referencefaq-li">
   <a href="/ghidra_advisor/docs/developer_reference/faq/" title="Frequently Asked Questions" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ghidra_advisordocsdeveloper_referencefaq"><span class="">FAQ</span></a>
+</li>
+  </ul>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id="m-ghidra_advisordocswhisper_deep_dive-li">
+  <a href="/ghidra_advisor/docs/whisper_deep_dive/" class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id="m-ghidra_advisordocswhisper_deep_dive"><span class="">Whisper Deep Dive</span></a>
+  <ul class="ul-2 foldable">
+    <li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ghidra_advisordocswhisper_deep_divebuilding_the_reference-li">
+  <a href="/ghidra_advisor/docs/whisper_deep_dive/building_the_reference/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ghidra_advisordocswhisper_deep_divebuilding_the_reference"><span class="">Building the Reference Model</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ghidra_advisordocswhisper_deep_diveloading_ghidra-li">
+  <a href="/ghidra_advisor/docs/whisper_deep_dive/loading_ghidra/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ghidra_advisordocswhisper_deep_diveloading_ghidra"><span class="">Loading the Reference Model into Ghidra</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ghidra_advisordocswhisper_deep_diveghidra_examination-li">
+  <a href="/ghidra_advisor/docs/whisper_deep_dive/ghidra_examination/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ghidra_advisordocswhisper_deep_diveghidra_examination"><span class="">Ghidra Examination</span></a>
+</li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id="m-ghidra_advisordocswhisper_deep_divedealing-_with_c-li">
+  <a href="/ghidra_advisor/docs/whisper_deep_dive/dealing-_with_c&#43;&#43;/" class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id="m-ghidra_advisordocswhisper_deep_divedealing-_with_c"><span class="">Dealing with C&#43;&#43;</span></a>
 </li>
   </ul>
 </li>
@@ -169,10 +188,12 @@ Without this branch Ghidra is stuck with a never-ratified older version of RISCV
 </ul>
 <h2 id="bazel">Bazel</h2>
 <ul>
-<li><a href="https://github.com/bazelbuild/bazel/releases">Bazel 11.4</a></li>
+<li><a href="https://github.com/bazelbuild/bazel/releases">Bazel 8.0</a></li>
 </ul>
-<p>Bazel builds in this workspace generate output in the temporary directory /run/user/1000/bazel, as specified in .bazelrc.
-This override can be changed or removed.</p>
+<p>Bazel builds in this workspace generate output in the temporary directory <code>/run/user/1000/bazel</code>, as specified in <code>.bazelrc</code>.
+This override can be changed or removed</p>
+<p>This project should work with Bazel 7.x as well, after adjusting some toolchain path names.  Bazel 8 uses &lsquo;+&rsquo; instead of &lsquo;~&rsquo;
+as an external repo naming suffix and &lsquo;@@&rsquo; instead of &lsquo;@&rsquo; to identify standard bazel repositories.</p>
 <h2 id="toolchain">Toolchain</h2>
 <ul>
 <li><a href="https://sourceware.org/git/binutils-gdb">binutils 2.42.50</a></li>
@@ -181,8 +202,9 @@ This override can be changed or removed.</p>
 <li>sysroot - a stripped down linux sysroot derived from the sysroot bootstrap in
 <a href="https://github.com/riscv-collab/riscv-gnu-toolchain">riscv-gnu-toolchain</a></li>
 </ul>
-<p>The toolchain is packaged locally as a Bazel module named <code>gcc_riscv_suite</code>, version 15.0.0.
-This module depends on a second module, <code>fedora_syslibs</code> version 40.0.0.  These are served out of a local
+<p>The toolchain is packaged locally as a Bazel module named <code>gcc_riscv_suite</code>, version 15.0.0.1.
+(Note that this is the first patch to the Bazel module based on the unreleased <code>GCC-15.0.0</code>).
+This module depends on a second module, <code>fedora_syslibs</code> version 41.0.0.  These are served out of a local
 Bazel module repository.
 The <code>gcc_riscv_suite</code> and <code>fedora_syslibs</code> modules wrap a 42 MB and 4.0 MB tarball, respectively.</p>
 <h2 id="emulators">Emulators</h2>
@@ -191,7 +213,7 @@ The <code>gcc_riscv_suite</code> and <code>fedora_syslibs</code> modules wrap a 
 <li><code>qemu-riscv64</code> provides user space emulation, which is very useful for exploring the behavior of
 particularly confusing assembly code sequences.</li>
 <li><code>qemu-system-riscv64</code> provides full RISCV-64 VM hosting.  This is more narrowly useful when testing
-binaries that require non-standard kernel options or kernel modules.
+binaries like DPDK which require non-standard kernel options or kernel modules.
 <ul>
 <li>The RISCV-64 VM used here is based on an Ubuntu 24.04 disk image and the <code>u-boot.bin</code> boot loader.
 This boot loader is critical for RISCV VMs, since the emulated BIOS firmware provides the kernel
@@ -205,12 +227,12 @@ with the definitive set of RISCV extensions available to the hardware threads (a
 </ul>
 <h2 id="system">System</h2>
 <ul>
-<li>Fedora 40 with wayland graphics.</li>
-<li>Python 3</li>
+<li>Fedora 41 with wayland graphics.</li>
+<li>Python 3.13</li>
 </ul>
 
 	<div class="td-page-meta__lastmod">
-  Last modified November 2, 2024: <a href="https://github.com/thixotropist/ghidra_advisor/commit/7feaa1369388930d1af2a9acd93f9091d2ccf7e7">Add documentation content (7feaa13)</a>
+  Last modified December 10, 2024: <a href="https://github.com/thixotropist/ghidra_advisor/commit/06210afa5eee1faa9077c4496cfb444a239701d5">Update to use Bazel 8.0, adjusting build path names as needed (06210af)</a>
 </div>
 
 </div>

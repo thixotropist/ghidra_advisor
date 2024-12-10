@@ -1,7 +1,7 @@
 <!doctype html>
 <html itemscope itemtype="http://schema.org/WebPage" lang="en" class="no-js">
   <head>
-	<meta name="generator" content="Hugo 0.136.5">
+	<meta name="generator" content="Hugo 0.137.0">
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="alternate" type="application/rss&#43;xml" href="https://thixotropist.github.io/ghidra_advisor/index.xml">
@@ -30,8 +30,8 @@
 
   <meta itemprop="name" content="Ghidra Advisor for RISCV-64 Vector Extensions">
   <meta itemprop="description" content="Ghidra Advisor Optimizing compilers can transform simple loops into hard-to-understand instruction sequences. Can we train AI advisors or humans how to translate vector instruction sequences into something useful for cybersecurity evaluation? Introduction We’ll use the RISC-V Vector instruction extension set as an example. It is a ‘vector length agnostic’ SIMD architecture, where the same instruction sequence can handle vector lengths of 128, 256, 512, or more bits. The Sophgo sg2380 processor is a good example of this class, with applications in video surveillance and image processing - eventually perhaps even autonomous munitions.">
-  <meta itemprop="dateModified" content="2024-11-02T15:00:04-04:00">
-  <meta itemprop="wordCount" content="554">
+  <meta itemprop="dateModified" content="2024-11-18T08:59:12-05:00">
+  <meta itemprop="wordCount" content="841">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Ghidra Advisor for RISCV-64 Vector Extensions">
   <meta name="twitter:description" content="Ghidra Advisor Optimizing compilers can transform simple loops into hard-to-understand instruction sequences. Can we train AI advisors or humans how to translate vector instruction sequences into something useful for cybersecurity evaluation? Introduction We’ll use the RISC-V Vector instruction extension set as an example. It is a ‘vector length agnostic’ SIMD architecture, where the same instruction sequence can handle vector lengths of 128, 256, 512, or more bits. The Sophgo sg2380 processor is a good example of this class, with applications in video surveillance and image processing - eventually perhaps even autonomous munitions.">
@@ -119,7 +119,7 @@ translate many simple loops into complex vector instruction sequences.</li>
 <p>The simplest way to use this site is to browse through the examples, looking for the patterns in how
 the reference compiler translates simple C code into sequences of RISC-V instructions.  Most patterns
 are built with two machine architectures, with and without vector instructions enabled.</p>
-<p>More advanced users can use the sqlite3 database of precompiled patterns help translate vector instruction
+<p>More advanced users can use the sqlite3 database of precompiled patterns to help translate vector instruction
 sequences back into C code.  The Jupyter Lab notebook <code>Advisor.ipynb</code> can take a Ghidra disassembly sample
 from your clipboard and compare it to several thousand training set examples.  This likely won&rsquo;t provide
 a solid match, but can provide useful context.</p>
@@ -141,6 +141,24 @@ asked its resident Ghidra user to evaluate its executables.  Initial inspection 
 multi-core RISCV-64 processor with vector instructions, a GCC-15 toolchain, and a linux real time OS.  Our Ghidra user
 believes the product under test has library code somewhat similar to <code>Whisper.cpp</code> for the voice recognition and AI-adaptive
 elements and <code>DPDK</code>-like code for the router/firewall functions.</p>
+<h2 id="interim-conclusions">Interim Conclusions</h2>
+<p>Ghidra users are most likely to encounter RISCV vector instruction sequences in three circumstances:</p>
+<ol>
+<li>Inline expansion of utility functions similar to <code>memcpy</code> or <code>strlen</code>.  These are common in source code and generally easy for
+humans and the Advisor to recognize.</li>
+<li>Auto-vectorized simple loops that have been &lsquo;strip-mined&rsquo; by the compiler for faster execution.  These are also common in optimized
+code.  The Advisor can recognize many of these, while their diversity can make it difficult for humans to untangle.  Optimized loops
+over arrays of structures can be especially confusing when the compiler has optimized index, offset, and loop termination calculations.</li>
+<li>Optimization of scalar code, where the compiler has replaced simple scalar instructions initializing a data structure with fewer vector
+instructions.  The most common example is initializing two consecutive 64 bit elements to zero.  Also common are vector sequences
+initializing two adjacent integers to (0,1) or (false, true).  These vector sequences are fairly easy for both humans and Advisor to
+recognize - but it can be far more difficult to figure out just <em>what</em> fields or objects have been initialized.</li>
+</ol>
+<p>The biggest surprise of this study was the prevalence of that third case - how often optimizing compilers could obfuscate initialization
+code that was likely far from the critical data path.  Using Ghidra to completely analyze the main routine of a Whisper.cpp application requires
+first analysis of optimized libstdc++ <code>string</code>, <code>vector</code>, <code>map</code>, and <code>iostream</code> inlined code.  That analysis will hopefully identify the type and layout
+of objects allocated on the stack and heap. After that Advisor can associate initialization vector instructions with those objects.
+At that point the Ghidra user can look at such objects to decide if they are relevant to their specific analysis task.</p>
 </div>
 </div>
 </section>

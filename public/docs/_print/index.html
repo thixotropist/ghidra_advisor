@@ -131,6 +131,30 @@ This is the multi-page printable view of this section.
 
     
   
+    
+    
+	
+<li>1.3: <a href="#pg-bddfaf6864c273e0e1728282c261bc66">Whisper Exploration Example</a></li>
+
+
+    
+  
+    
+    
+	
+<li>1.4: <a href="#pg-654b6c2d93bd39786a04077dd6754660">Whisper Memcpy</a></li>
+
+
+    
+  
+    
+    
+	
+<li>1.5: <a href="#pg-a421ed227c1c023c2e6ab7af1dd9aa86">Whisper Output Forensics</a></li>
+
+
+    
+  
 
     </ul>
     
@@ -178,6 +202,57 @@ This is the multi-page printable view of this section.
     
 	
 <li>2.4: <a href="#pg-7708ebcad404a8a36f7be4d1b0591b8c">Frequently Asked Questions</a></li>
+
+
+    
+  
+
+    </ul>
+    
+  
+    
+    
+	
+<li>3: <a href="#pg-4ea386f903432c2e68afc819ee5ad046">Whisper Deep Dive</a></li>
+
+
+    
+    <ul>
+        
+  
+  
+  
+  
+
+  
+    
+    
+	
+<li>3.1: <a href="#pg-82f7d341b671fadc0b45e4fe123a0f1f">Building the Reference Model</a></li>
+
+
+    
+  
+    
+    
+	
+<li>3.2: <a href="#pg-58dbcf8b8606d2e83fb7c8d6af7a0256">Loading the Reference Model into Ghidra</a></li>
+
+
+    
+  
+    
+    
+	
+<li>3.3: <a href="#pg-be96d603f2fe35bafb47e87774356637">Ghidra Examination</a></li>
+
+
+    
+  
+    
+    
+	
+<li>3.4: <a href="#pg-d351c5ba9783afb52010ebb162071547">Dealing with C&#43;&#43;</a></li>
 
 
     
@@ -854,6 +929,313 @@ with vectorization.</p>
     
 	
   
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-bddfaf6864c273e0e1728282c261bc66">1.3 - Whisper Exploration Example</h1>
+    
+	<p>How do we move forward when the Advisor doesn&rsquo;t provide a lot of help?  We&rsquo;ll start with an example
+taken from Whisper.cpp&rsquo;s main routine.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#000">pFVar26</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">local_460</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">vsetivli_e64m1tama</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">local_700</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">FILE</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">local_c0</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">_40_8_</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">local_6f8</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pFVar34</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">_IO_read_ptr</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">auVar45</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vle64_v</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">avStack_470</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">vmv_v_i</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">in_v4</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">auVar46</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vle64_v</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">local_700</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">vse64_v</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">in_v4</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">avStack_470</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">auVar47</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vslidedown_vi</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">auVar45</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">auVar46</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vslidedown_vi</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">auVar46</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">local_4e0</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">FILE</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">vmv_x_s</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">auVar46</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">auVar46</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vle64_v</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">local_700</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">pcVar20</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">char</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">vmv_x_s</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">auVar47</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">local_4d8</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">local_88</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">local_c0</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">_40_8_</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vmv_x_s</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">auVar45</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">pFVar34</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">_IO_read_ptr</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pcVar20</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">local_4e8</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">FILE</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">vmv_x_s</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">auVar46</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">local_460</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">FILE</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#0000cf;font-weight:bold">0x0</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">local_88</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pFVar26</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">vector</span><span style="color:#ce5c00;font-weight:bold">&lt;&gt;::~</span><span style="color:#000">vector</span><span style="color:#000;font-weight:bold">((</span><span style="color:#000">vector</span><span style="color:#ce5c00;font-weight:bold">&lt;&gt;</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">local_4e8</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">vector</span><span style="color:#ce5c00;font-weight:bold">&lt;&gt;::~</span><span style="color:#000">vector</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">avStack_470</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">_Rb_tree</span><span style="color:#ce5c00;font-weight:bold">&lt;&gt;::</span><span style="color:#000">_M_erase</span><span style="color:#000;font-weight:bold">((</span><span style="color:#000">_Rb_tree_node</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">local_490</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><p>This clearly isn&rsquo;t a loop.  Instead it is some sort of initialization sequence that allows
+vector instructions to slightly optimize the code.  The advisor results aren&rsquo;t very helpful:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Signatures:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Vector length set to = 0x2
+</span></span><span style="display:flex;"><span>    Element width is = 64 bits
+</span></span><span style="display:flex;"><span>    Vector load: vle64.v
+</span></span><span style="display:flex;"><span>    Vector load: vle64.v
+</span></span><span style="display:flex;"><span>    Vector store: vse64.v
+</span></span><span style="display:flex;"><span>    Vector integer slidedown: vslidedown.vi
+</span></span><span style="display:flex;"><span>    Vector integer slidedown: vslidedown.vi
+</span></span><span style="display:flex;"><span>    Vector load: vle64.v
+</span></span><span style="display:flex;"><span>    Significant operations, in the order they appear:
+</span></span><span style="display:flex;"><span>        vsetivli,vle64.v,vmv.v.i,vle64.v,vse64.v,vslidedown.vi,vslidedown.vi,vmv.x.s,vle64.v,vmv.x.s,vmv.x.s,vmv.x.s
+</span></span><span style="display:flex;"><span>    Significant operations, in alphanumeric order:
+</span></span><span style="display:flex;"><span>        vle64.v,vle64.v,vle64.v,vmv.v.i,vmv.x.s,vmv.x.s,vmv.x.s,vmv.x.s,vse64.v,vsetivli,vslidedown.vi,vslidedown.vi
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Similarity Analysis
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Compare the clipped example to the database of vectorized examples.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The best match is id=1889 [0.652]= vmv.v.i,vmv.x.s,vmv.x.s,vmv.x.s,vse8.v,vsetivli,vsetivli,vsetivli,vsetvli
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The clip is similar to the reference example data/custom_testsuite/builtins/string_rv64gcv:bzero_15
+</span></span></code></pre></div><p>This suggests several Advisor improvements:</p>
+<ul>
+<li>explicitly report that no loops are found, and that the stanza is likely a vector optimization of
+scalar instruction transforms.</li>
+<li>add a quick explanation of what vslidedown.vi does</li>
+<li>the vmv instructions need annotation, especially any that load constants into registers.</li>
+</ul>
+<p>A manual analysis suggests that the vector instructions manipulate pairs of 64 bit pointers,
+variously copying them, zeroing them, or copying first or second elements of the pair into
+scalar registers.  That probably means we want simple C++ vector manipulation functions in our
+set of custom patterns.</p>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-654b6c2d93bd39786a04077dd6754660">1.4 - Whisper Memcpy</h1>
+    
+	<p>Is it easy to recognize vector expansions of libc functions like <code>memcpy</code>?</p>
+<p>Let&rsquo;s locate some explicit invocations of <code>memcpy</code> within Whisper and
+see what the Advisor has to say.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">whisper_context</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">whisper_init_from_buffer_with_params_no_state</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">void</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">buffer</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">size_t</span> <span style="color:#000">buffer_size</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">whisper_context_params</span> <span style="color:#000">params</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">buf_context</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">uint8_t</span><span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">buffer</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">size_t</span> <span style="color:#000">size</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">size_t</span> <span style="color:#000">current_offset</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">};</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">loader</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">read</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">[](</span><span style="color:#204a87;font-weight:bold">void</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">ctx</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">void</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">output</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">size_t</span> <span style="color:#000">read_size</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">buf_context</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">buf</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">reinterpret_cast</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">buf_context</span> <span style="color:#ce5c00;font-weight:bold">*&gt;</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">size_t</span> <span style="color:#000">size_to_copy</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">buf</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">current_offset</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">read_size</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#000">buf</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">size</span> <span style="color:#ce5c00;font-weight:bold">?</span> <span style="color:#f57900">read_size</span> <span style="color:#000;font-weight:bold">:</span> <span style="color:#000">buf</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">size</span> <span style="color:#ce5c00;font-weight:bold">-</span> <span style="color:#000">buf</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">current_offset</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">memcpy</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">output</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">buf</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">buffer</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">buf</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">current_offset</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">size_to_copy</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">buf</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">current_offset</span> <span style="color:#ce5c00;font-weight:bold">+=</span> <span style="color:#000">size_to_copy</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">size_to_copy</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">};</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">};</span>
+</span></span></code></pre></div><p>This source example shows a few traits:</p>
+<ul>
+<li>the number of bytes to copy is not in general known at compile time</li>
+<li>the buffer type is <code>uint8_t*</code></li>
+<li>there are no alignment guarantees</li>
+</ul>
+<p>GCC 15 compiles the lambda stored in loader.read as
+<code>whisper_init_from_buffer_with_params_no_state::{lambda(void*,void*,unsigned_long)#1}::_FUN</code>.
+The relevant Ghidra listing window instruction sequence (trimmed of address and whitespace) is:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-as" data-lang="as"><span style="display:flex;"><span><span style="color:#000">LAB_000b0be2</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">vsetvli</span>  <span style="color:#000">a3</span><span style="color:#ce5c00;font-weight:bold">,</span><span style="color:#000">param_3</span><span style="color:#ce5c00;font-weight:bold">,</span><span style="color:#000">e8</span><span style="color:#ce5c00;font-weight:bold">,</span><span style="color:#000">m8</span><span style="color:#ce5c00;font-weight:bold">,</span><span style="color:#000">ta</span><span style="color:#ce5c00;font-weight:bold">,</span><span style="color:#000">ma</span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#000">vle8</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">v</span>   <span style="color:#000">v8</span><span style="color:#ce5c00;font-weight:bold">,</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">a4</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">c</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">sub</span>    <span style="color:#000">param_3</span><span style="color:#ce5c00;font-weight:bold">,</span><span style="color:#000">a3</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">c</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">add</span>    <span style="color:#000">a4</span><span style="color:#ce5c00;font-weight:bold">,</span><span style="color:#000">a3</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">vse8</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">v</span>   <span style="color:#000">v8</span><span style="color:#ce5c00;font-weight:bold">,</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">param_2</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">c</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">add</span>    <span style="color:#000">param_2</span><span style="color:#ce5c00;font-weight:bold">,</span><span style="color:#000">a3</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">c</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">bnez</span>   <span style="color:#000">param_3</span><span style="color:#ce5c00;font-weight:bold">,</span><span style="color:#000">LAB_000b0be2</span>
+</span></span></code></pre></div><p>Copying the Ghidra listing to the clipboard and running the Advisor gives us:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Clipboard Contents to Analyze
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>LAB_000b0be2                                    XREF[1]:     000b0bf4(j)
+</span></span><span style="display:flex;"><span>000b0be2 d7 76 36 0c     vsetvli                        a3,param_3,e8,m8,ta,ma
+</span></span><span style="display:flex;"><span>000b0be6 07 04 07 02     vle8.v                         v8,(a4)
+</span></span><span style="display:flex;"><span>000b0bea 15 8e           c.sub                          param_3,a3
+</span></span><span style="display:flex;"><span>000b0bec 36 97           c.add                          a4,a3
+</span></span><span style="display:flex;"><span>000b0bee 27 84 05 02     vse8.v                         v8,(param_2)
+</span></span><span style="display:flex;"><span>000b0bf2 b6 95           c.add                          param_2,a3
+</span></span><span style="display:flex;"><span>000b0bf4 7d f6           c.bnez                         param_3,LAB_000b0be2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Signatures:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Element width is = 8 bits
+</span></span><span style="display:flex;"><span>    Vector registers are grouped with MUL = 8
+</span></span><span style="display:flex;"><span>    Vector load: vle8.v
+</span></span><span style="display:flex;"><span>        Vector load is to multiple registers
+</span></span><span style="display:flex;"><span>    Vector store: vse8.v
+</span></span><span style="display:flex;"><span>        Vector store is from multiple registers
+</span></span><span style="display:flex;"><span>    At least one loop exists
+</span></span><span style="display:flex;"><span>    Significant operations, in the order they appear:
+</span></span><span style="display:flex;"><span>        vsetvli,vle8.v,vse8.v,_loop
+</span></span><span style="display:flex;"><span>    Significant operations, in alphanumeric order:
+</span></span><span style="display:flex;"><span>        _loop,vle8.v,vse8.v,vsetvli
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Similarity Analysis
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Compare the clipped example to the database of vectorized examples.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The best match is id=1873 [1.000]= _loop,vle8.v,vse8.v,vsetvli
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>The clip is similar to the reference example data/custom_testsuite/builtins/memcpy_rv64gcv:memcpy_255
+</span></span><span style="display:flex;"><span>Reference C Source
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>void memcpy_255()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  __builtin_memcpy (to, from, 255);
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Reference Compiled Assembly Code
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>65e	auipc	a3,0x2
+</span></span><span style="display:flex;"><span>662	ld	a3,-1678(a3)
+</span></span><span style="display:flex;"><span>666	auipc	a2,0x0
+</span></span><span style="display:flex;"><span>66a	addi	a2,a2,82
+</span></span><span style="display:flex;"><span>66e	li	a4,255
+</span></span><span style="display:flex;"><span>672	vsetvli	a5,a4,e8,m8,ta,ma
+</span></span><span style="display:flex;"><span>676	vle8.v	v8,(a2)
+</span></span><span style="display:flex;"><span>67a	sub	a4,a4,a5
+</span></span><span style="display:flex;"><span>67c	add	a2,a2,a5
+</span></span><span style="display:flex;"><span>67e	vse8.v	v8,(a3)
+</span></span><span style="display:flex;"><span>682	add	a3,a3,a5
+</span></span></code></pre></div><p>The Advisor has matched the vector instruction loop to the GCC <code>__builtin_memcpy</code> test case where the
+number of bytes to transfer is large (255).  The individual scalar instructions are not the same.</p>
+<p>This example shows something important that we probably want to add to the Advisor&rsquo;s report:</p>
+<p>The <code>vsetvli</code> instruction includes the <code>m8</code> multiplier option, which means vector operations cover groups of 8
+registers.  The <code>vle8.v</code> only references vector register <code>v8</code>, but the loads and stores affect the 8
+registers <code>v8</code> through <code>v15</code>.  If the <code>__builtin_memcpy</code> appeared in an inline code fragment, where
+there may be more pressure on vector register availability, we might have seen very similar code
+with multipliers of <code>m4</code>, <code>m2</code>, or <code>m1</code>.</p>
+<p>What does the Ghidra decompiler show for this instruction sequence?</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">do</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">lVar3</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vsetvli_e8m8tama</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">uVar1</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">auVar4</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vle8_v</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">lVar2</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">uVar1</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">uVar1</span> <span style="color:#ce5c00;font-weight:bold">-</span> <span style="color:#000">lVar3</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">lVar2</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">lVar2</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">lVar3</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">vse8_v</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">auVar4</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">param_2</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">param_2</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">void</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)((</span><span style="color:#204a87;font-weight:bold">long</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">param_2</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">lVar3</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">uVar1</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><p>What would we like Ghidra&rsquo;s decompiler to show instead?  Something like:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#000">__builtin_memcpy</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">param_2</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">lvar2</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">uVar1</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><p>That&rsquo;s not quite correct, as <code>__builtin_memcpy</code> doesn&rsquo;t mutate the values <code>param_2</code> or <code>lvar2</code>.</p>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-a421ed227c1c023c2e6ab7af1dd9aa86">1.5 - Whisper Output Forensics</h1>
+    
+	<p>You might expect Whisper to use a lot of vector instructions in its inference engine, and it definitely does.
+Are vector instructions common enough to complicate Whisper forensic analysis, looking at functions an
+adversary is likeliest to target?  For this example we will make a deep dive into the function <code>output_txt</code>,
+since malicious code might want to review and alter dictated text.</p>
+<p>This code also lets us examine how RISCV vector instructions are used to implement the <code>libstdc++</code> vector library functions.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">char</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">whisper_full_get_segment_text</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">whisper_context</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">ctx</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">i_segment</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">ctx</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">state</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">result_all</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">i_segment</span><span style="color:#000;font-weight:bold">].</span><span style="color:#000">text</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">c_str</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">static</span> <span style="color:#204a87;font-weight:bold">bool</span> <span style="color:#000">output_txt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">whisper_context</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">ctx</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">char</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">fname</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">const</span> <span style="color:#000">whisper_params</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span> <span style="color:#000">params</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">vector</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">vector</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">float</span><span style="color:#ce5c00;font-weight:bold">&gt;&gt;</span> <span style="color:#000">pcmf32s</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">ofstream</span> <span style="color:#000">fout</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">fname</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#000">fout</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">is_open</span><span style="color:#000;font-weight:bold">())</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">fprintf</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stderr</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;%s: failed to open &#39;%s&#39; for writing</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">__func__</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">fname</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#204a87">false</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">fprintf</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">stderr</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;%s: saving output to &#39;%s&#39;</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">__func__</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">fname</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">n_segments</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">whisper_full_n_segments</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">i</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000">i</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#000">n_segments</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#ce5c00;font-weight:bold">++</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">char</span> <span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">text</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">whisper_full_get_segment_text</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">i</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">string</span> <span style="color:#000">speaker</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">params</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">diarize</span> <span style="color:#ce5c00;font-weight:bold">&amp;&amp;</span> <span style="color:#000">pcmf32s</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">size</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">int64_t</span> <span style="color:#000">t0</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">whisper_full_get_segment_t0</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">i</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">int64_t</span> <span style="color:#000">t1</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">whisper_full_get_segment_t1</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">ctx</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">i</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#000">speaker</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">estimate_diarization_speaker</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">pcmf32s</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">t0</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">t1</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">fout</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">speaker</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">text</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#204a87">true</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>The key elements of this function are:</p>
+<ul>
+<li>text is collected in segments and stored in the context variable <code>ctx</code></li>
+<li>text segments are retrieved with the function <code>whisper_full_get_segment_text</code></li>
+<li>text is copied into an output stream <code>fout</code></li>
+</ul>
+<p>The <code>params.diarize</code> code block matters only if voice is collected
+in stereo and Whisper has been asked to differentiate between speakers.</p>
+<p>The Ghidra decompiler shows four vector instruction sets starting with a <code>vset*</code> instruction.
+The first of these is a simple initialization:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#000">vsetivli_e64m1tama</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">vmv_v_i</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">in_v1</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">vse64_v</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">in_v1</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">auStack_90</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">vse64_v</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">in_v1</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">auStack_80</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><p>These instructions initialize two adjacent 16 byte blocks of memory to zero.  These are likely
+four 64 bit pointers or counters embedded within structures.</p>
+<p>The next vector stanza is:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#000">vsetivli_e64m1tama</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">lStack_2e0</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">lStack_288</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">uStack_2d8</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">local_280</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">];</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">auVar24</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vle64_v</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">lStack_2e0</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">auVar25</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vle64_v</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">lStack_2e0</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">auVar24</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vslidedown_vi</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">auVar24</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">lStack_2a8</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vmv_x_s</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">auVar25</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">local_2a0</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vmv_x_s</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">auVar24</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><p>This one is puzzling, as it appears to load two 64 bit values twice, then store them into separate scalar registers.</p>
+<p>The next stanza looks like a simple <code>memcpy</code> expansion:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">do</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">lVar18</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vsetvli_e8m8tama</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">lStack_288</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">auVar24</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vle8_v</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">puVar16</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">lStack_288</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">lStack_288</span> <span style="color:#ce5c00;font-weight:bold">-</span> <span style="color:#000">lVar18</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">puVar16</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">ulong</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)((</span><span style="color:#204a87;font-weight:bold">long</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">puVar16</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">lVar18</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">vse8_v</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">auVar24</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">puVar20</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">puVar20</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">ulong</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)((</span><span style="color:#204a87;font-weight:bold">long</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">puVar20</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">lVar18</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">lStack_288</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><p>The final stanza is the interesting one:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#000">pcVar17</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">text</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">do</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">vsetvli_e8m1tama</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">pcVar17</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">pcVar17</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">lVar18</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">auVar24</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vle8ff_v</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">pcVar17</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">auVar24</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vmseq_vi</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">auVar24</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">lVar19</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vfirst_m</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">auVar24</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">lVar18</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">in_vl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">lVar19</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">__ostream_insert</span><span style="color:#ce5c00;font-weight:bold">&lt;&gt;</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">pbVar12</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">text</span><span style="color:#000;font-weight:bold">,(</span><span style="color:#204a87;font-weight:bold">long</span><span style="color:#000;font-weight:bold">)(</span><span style="color:#000">pcVar17</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">lVar19</span> <span style="color:#ce5c00;font-weight:bold">-</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">long</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">text</span><span style="color:#000;font-weight:bold">)));</span>
+</span></span></code></pre></div><p>This appears to be a vector implementation of <code>strlen(text)</code> requested by <code>std::__ostream_insert&lt;&gt;</code>.</p>
+<p>Our hypothetical adversary would want to evaluate <code>*text</code> and reset the <code>text</code> pointer to the maliciously altered output string.</p>
+<p>The current Advisor classifies these four stanzas as:</p>
+<ul>
+<li>some sort of initializer</li>
+<li>some sort of shuffle</li>
+<li><code>memcpy</code></li>
+<li><code>strlen</code></li>
+</ul>
+<p>A Ghidra user would likely ignore the initializer and the shuffle as doing something benign and obscure within the I/O subsystem,
+recognize the <code>memcpy</code> and <code>strlen</code> for what they are, then concentrate on any unexpected manipulations of the <code>*text</code> string.</p>
+
+</div>
+
+
+
+    
+	
+  
 
     
 	
@@ -899,10 +1281,12 @@ Without this branch Ghidra is stuck with a never-ratified older version of RISCV
 </ul>
 <h2 id="bazel">Bazel</h2>
 <ul>
-<li><a href="https://github.com/bazelbuild/bazel/releases">Bazel 11.4</a></li>
+<li><a href="https://github.com/bazelbuild/bazel/releases">Bazel 8.0</a></li>
 </ul>
-<p>Bazel builds in this workspace generate output in the temporary directory /run/user/1000/bazel, as specified in .bazelrc.
-This override can be changed or removed.</p>
+<p>Bazel builds in this workspace generate output in the temporary directory <code>/run/user/1000/bazel</code>, as specified in <code>.bazelrc</code>.
+This override can be changed or removed</p>
+<p>This project should work with Bazel 7.x as well, after adjusting some toolchain path names.  Bazel 8 uses &lsquo;+&rsquo; instead of &lsquo;~&rsquo;
+as an external repo naming suffix and &lsquo;@@&rsquo; instead of &lsquo;@&rsquo; to identify standard bazel repositories.</p>
 <h2 id="toolchain">Toolchain</h2>
 <ul>
 <li><a href="https://sourceware.org/git/binutils-gdb">binutils 2.42.50</a></li>
@@ -911,8 +1295,9 @@ This override can be changed or removed.</p>
 <li>sysroot - a stripped down linux sysroot derived from the sysroot bootstrap in
 <a href="https://github.com/riscv-collab/riscv-gnu-toolchain">riscv-gnu-toolchain</a></li>
 </ul>
-<p>The toolchain is packaged locally as a Bazel module named <code>gcc_riscv_suite</code>, version 15.0.0.
-This module depends on a second module, <code>fedora_syslibs</code> version 40.0.0.  These are served out of a local
+<p>The toolchain is packaged locally as a Bazel module named <code>gcc_riscv_suite</code>, version 15.0.0.1.
+(Note that this is the first patch to the Bazel module based on the unreleased <code>GCC-15.0.0</code>).
+This module depends on a second module, <code>fedora_syslibs</code> version 41.0.0.  These are served out of a local
 Bazel module repository.
 The <code>gcc_riscv_suite</code> and <code>fedora_syslibs</code> modules wrap a 42 MB and 4.0 MB tarball, respectively.</p>
 <h2 id="emulators">Emulators</h2>
@@ -921,7 +1306,7 @@ The <code>gcc_riscv_suite</code> and <code>fedora_syslibs</code> modules wrap a 
 <li><code>qemu-riscv64</code> provides user space emulation, which is very useful for exploring the behavior of
 particularly confusing assembly code sequences.</li>
 <li><code>qemu-system-riscv64</code> provides full RISCV-64 VM hosting.  This is more narrowly useful when testing
-binaries that require non-standard kernel options or kernel modules.
+binaries like DPDK which require non-standard kernel options or kernel modules.
 <ul>
 <li>The RISCV-64 VM used here is based on an Ubuntu 24.04 disk image and the <code>u-boot.bin</code> boot loader.
 This boot loader is critical for RISCV VMs, since the emulated BIOS firmware provides the kernel
@@ -935,8 +1320,8 @@ with the definitive set of RISCV extensions available to the hardware threads (a
 </ul>
 <h2 id="system">System</h2>
 <ul>
-<li>Fedora 40 with wayland graphics.</li>
-<li>Python 3</li>
+<li>Fedora 41 with wayland graphics.</li>
+<li>Python 3.13</li>
 </ul>
 
 </div>
@@ -994,11 +1379,7 @@ they are found in the disassembly.</li>
 the compiler reorders instructions.</li>
 </ul>
 <h2 id="querying-the-database-in-advisor">Querying the Database in Advisor</h2>
-
-<figure>
-    <img src="Workflow_advisor.svg" width="80%"/> 
-</figure>
-
+<p><img src="../Workflow_generation.svg" alt="Workflow Generation"></p>
 <p>Users can select assembly code from Ghidra&rsquo;s listing window, then run analysis cells in <code>Advisor.ipynb</code> to generate reports
 on the types of C code that may match the listing.  Users will likely want to iterate complex selections by adding custom
 examples and repeating the match, to see if they can reproduce the C code that might have generated the vectorized assembly.</p>
@@ -1097,6 +1478,522 @@ get complicated when processors have both 128 bit and 512 bit cores, like the sg
 <dd>No.  Vector extensions are very likely to be found in inlined utilities like memcpy and strncmp.
 Most simple loops over arrays of structs can be optimized with vector instructions.</dd>
 </dl>
+
+</div>
+
+
+
+    
+	
+  
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-4ea386f903432c2e68afc819ee5ad046">3 - Whisper Deep Dive</h1>
+    
+	<p>This exercise mocks up a forensic analysis of a hypothetical voice to text application believed to be
+based on <code>Whisper.cpp</code>.  The previous examples applied Advisor to fairly random vector instruction sequences
+found in a <code>Whisper.cpp</code> compilation without much identifying metadata.  This time we will do things more
+methodically, using a specific <code>Whisper.cpp</code> release built with specific build instructions, analyzed in Ghidra in both stripped
+and unstripped binary formats.  Dependent libraries <code>libc</code>, <code>libm</code>, and <code>libstdc++</code> will be imported into Ghidra from the toolchain
+used to construct the whisper executable.  Once we have trained Advisor to help with the known-source whisper application, we might
+be better able to use in in analyzing potentially malicious whisper-like applications.</p>
+<p>This is an iterative process, where we take some initial guesses into how the application-under-test (AUT) was built, rebuild our whisper
+reference model the same way, then adjust either the reference model or the build parameters until we see similar key patterns
+in our AUT and reference models.</p>
+<p>The initial guesses are:</p>
+<ul>
+<li>Similar to Whisper.cpp release 1.7.1</li>
+<li>Built for RISCV64 cores with the rva22 profile plus vector extensions, something like the SiFive P670 cores within a SG2380 processor.</li>
+<li>Built with gcc 15.0.0 with march=rv64gcv, fast-math, and O3 options for a linux-like OS.</li>
+<li>dynamically linked with libc, libm, libstdc++ as of mid 2024.</li>
+</ul>
+<p>It&rsquo;s worthwhile establishing key structures used by Whisper - and likely by any malicious code forked from Whisper.</p>
+<p>Inspecting the reference source code suggests these structures:</p>
+<ul>
+<li>whisper_context</li>
+<li>whisper_state - created by <code>whisper_init_state(struct whisper_context * ctx)</code></li>
+<li>whisper_context_params</li>
+</ul>
+
+</div>
+
+
+
+    
+      
+  
+  
+  
+  
+
+  
+  
+
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-82f7d341b671fadc0b45e4fe123a0f1f">3.1 - Building the Reference Model</h1>
+    
+	<p>We start by importing <code>Whisper.cpp</code> into our Bazel build environment.  We may eventually want a full fork of the
+code, but not until we are sure of the base release and what directions that fork will need to take.</p>
+<p>This import starts with a simple addition to our MODULE.bazel workspace file:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span># MODULE.bazel
+</span></span><span style="display:flex;"><span>http_archive = use_repo_rule(&#34;@bazel_tools//tools/build_defs/repo:http.bzl&#34;, &#34;http_archive&#34;)
+</span></span><span style="display:flex;"><span># whisper.cpp is an open source voice-to-text inference app built on Meta&#39;s LLaMA model.
+</span></span><span style="display:flex;"><span># It is a useful exemplar of autovectorization of ML code with some examples of hand-coded
+</span></span><span style="display:flex;"><span># riscv intrinsics.
+</span></span><span style="display:flex;"><span>http_archive(
+</span></span><span style="display:flex;"><span>    name = &#34;whisper_cpp&#34;,
+</span></span><span style="display:flex;"><span>    urls = [&#34;https://github.com/ggerganov/whisper.cpp/archive/refs/tags/v1.7.1.tar.gz&#34;],
+</span></span><span style="display:flex;"><span>    strip_prefix = &#34;whisper.cpp-1.7.1/&#34;,
+</span></span><span style="display:flex;"><span>    build_file = &#34;//:whisper-cpp.BUILD&#34;,
+</span></span><span style="display:flex;"><span>    sha256 = &#34;97f19a32212f2f215e538ee37a16ff547aaebc54817bd8072034e02466ce6d55&#34;
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p>Next we add <code>whisper-cpp.BUILD</code> to show how to build libraries and binaries.  The instructions
+for whisper library include these stanzas:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>c_library(
+</span></span><span style="display:flex;"><span>    name = &#34;whisper&#34;,
+</span></span><span style="display:flex;"><span>    srcs = [
+</span></span><span style="display:flex;"><span>        &#34;ggml/src/ggml.c&#34;,
+</span></span><span style="display:flex;"><span>        &#34;ggml/src/ggml-aarch64.c&#34;,
+</span></span><span style="display:flex;"><span>        &#34;ggml/src/ggml-alloc.c&#34;,
+</span></span><span style="display:flex;"><span>        &#34;ggml/src/ggml-backend.cpp&#34;,
+</span></span><span style="display:flex;"><span>        &#34;ggml/src/ggml-backend-impl.h&#34;,
+</span></span><span style="display:flex;"><span>        &#34;ggml/src/ggml-impl.h&#34;,
+</span></span><span style="display:flex;"><span>        &#34;ggml/src/ggml-quants.c&#34;,
+</span></span><span style="display:flex;"><span>        &#34;src/whisper.cpp&#34;,
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>    copts = [
+</span></span><span style="display:flex;"><span>        &#34;-I%s/include&#34; % EXTERNAL_PATH,
+</span></span><span style="display:flex;"><span>        &#34;-I%s/ggml/include&#34; % EXTERNAL_PATH,
+</span></span><span style="display:flex;"><span>        &#34;-I%s/ggml/src&#34; % EXTERNAL_PATH,
+</span></span><span style="display:flex;"><span>        &#34;-pthread&#34;,
+</span></span><span style="display:flex;"><span>        &#34;-O3&#34;,
+</span></span><span style="display:flex;"><span>        &#34;-ffast-math&#34;,
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    defines = [
+</span></span><span style="display:flex;"><span>        &#34;NDEBUG&#34;,
+</span></span><span style="display:flex;"><span>        &#34;_XOPEN_SOURCE=600&#34;,
+</span></span><span style="display:flex;"><span>        &#34;_GNU_SOURCE&#34;,
+</span></span><span style="display:flex;"><span>        &#34;__FINITE_MATH_ONLY__=0&#34;,
+</span></span><span style="display:flex;"><span>        &#34;__riscv_v_intrinsic=0&#34;,
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>cc_binary(
+</span></span><span style="display:flex;"><span>    name = &#34;main&#34;,
+</span></span><span style="display:flex;"><span>    srcs = [
+</span></span><span style="display:flex;"><span>        &#34;examples/common.cpp&#34;,
+</span></span><span style="display:flex;"><span>        &#34;examples/common.h&#34;,
+</span></span><span style="display:flex;"><span>        &#34;examples/common-ggml.cpp&#34;,
+</span></span><span style="display:flex;"><span>        &#34;examples/common-ggml.h&#34;,
+</span></span><span style="display:flex;"><span>        &#34;examples/dr_wav.h&#34;,
+</span></span><span style="display:flex;"><span>        &#34;examples/grammar-parser.cpp&#34;,
+</span></span><span style="display:flex;"><span>        &#34;examples/grammar-parser.h&#34;,
+</span></span><span style="display:flex;"><span>        &#34;examples/main/main.cpp&#34;,
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>        deps = [
+</span></span><span style="display:flex;"><span>        &#34;whisper&#34;,
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p>Now we can build the reference app using our existing RISCV-64 toolchain:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>$ bazel build --platforms=//platforms:riscv_gcc --copt=&#39;-march=rv64gcv&#39; @whisper_cpp//:main
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>$ file bazel-bin/external/+_repo_rules+whisper_cpp/main
+</span></span><span style="display:flex;"><span>bazel-bin/external/+_repo_rules+whisper_cpp/main: ELF 64-bit LSB executable, UCB RISC-V, RVC, double-float ABI, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-riscv64-lp64d.so.1, for GNU/Linux 4.15.0, not stripped
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$ readelf -A bazel-bin/external/+_repo_rules+whisper_cpp/main
+</span></span><span style="display:flex;"><span>Attribute Section: riscv
+</span></span><span style="display:flex;"><span>File Attributes
+</span></span><span style="display:flex;"><span>  Tag_RISCV_stack_align: 16-bytes
+</span></span><span style="display:flex;"><span>  Tag_RISCV_arch: &#34;rv64i2p1_m2p0_a2p1_f2p2_d2p2_c2p0_v1p0_zicsr2p0_zifencei2p0_zmmul1p0_zaamo1p0_zalrsc1p0_zca1p0_zcd1p0_zve32f1p0_zve32x1p0_zve64d1p0_zve64f1p0_zve64x1p0_zvl128b1p0_zvl32b1p0_zvl64b1p0&#34;
+</span></span><span style="display:flex;"><span>  Tag_RISCV_priv_spec: 1
+</span></span><span style="display:flex;"><span>  Tag_RISCV_priv_spec_minor: 11
+</span></span></code></pre></div><p>The final step is to locate the toolchain libraries used in this build, so that we can load them into Ghidra.  They are usually cached in a per-user
+location.  We&rsquo;ll search for the RISCV libstdc++ toolchain library:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> bazel info
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">...
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">output_base: /run/user/1000/bazel
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">output_path: /run/user/1000/bazel/execroot/_main/bazel-out
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">package_path: %workspace%
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">release: release 7.4.0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">...
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic"></span><span style="color:#8f5902">$</span> find /run/user/1000 -name libstdc++<span style="color:#4e9a06">\*</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">...
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/run/user/1000/bazel/external/gcc_riscv_suite+/riscv64-unknown-linux-gnu/lib/libstdc++.so.6.0.33
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">...
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/run/user/1000/bazel/external/gcc_riscv_suite+/riscv64-unknown-linux-gnu/lib/libstdc++.so.6
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">/run/user/1000/bazel/external/gcc_riscv_suite+/riscv64-unknown-linux-gnu/lib/libstdc++.so
+</span></span></span></code></pre></div><p>We will want to load <code>libstdc++.so.6</code> into Ghidra before we load the reference app.</p>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-58dbcf8b8606d2e83fb7c8d6af7a0256">3.2 - Loading the Reference Model into Ghidra</h1>
+    
+	<p>Create a new Ghidra project and load the whisper dependencies and then whisper itself, in both stripped and unstripped forms.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>/run/user/1000/bazel/external/gcc_riscv_suite+/lib/libc.so.6
+</span></span><span style="display:flex;"><span>/run/user/1000/bazel/external/gcc_riscv_suite+/lib/libm.so.6
+</span></span><span style="display:flex;"><span>/run/user/1000/bazel/external/gcc_riscv_suite+/riscv64-unknown-linux-gnu/lib/libstdc++.so.6
+</span></span><span style="display:flex;"><span>/run/user/1000/bazel/execroot/_main/bazel-out/k8-fastbuild/bin/external/_main~_repo_rules~whisper_cpp/main
+</span></span></code></pre></div><p>We can check the machine architecture for which these libraries were built with <code>readelf -A</code>:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> readelf -A /run/user/1000/bazel/external/gcc_riscv_suite+/lib/libc.so.6
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Attribute Section: riscv
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">File Attributes
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Tag_RISCV_stack_align: 16-bytes
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Tag_RISCV_arch: &#34;rv64i2p1_m2p0_a2p1_f2p2_d2p2_c2p0_zicsr2p0_zifencei2p0_zmmul1p0_zaamo1p0_zalrsc1p0&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Tag_RISCV_unaligned_access: Unaligned access
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Tag_RISCV_priv_spec: 1
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">  Tag_RISCV_priv_spec_minor: 11
+</span></span></span></code></pre></div><p>These libraries were most likely built with the non-vector rv64gc machine architecture.</p>
+<p>The stripped version of main is generated by copying the non-stripped binary to /tmp and then stripping it
+<em>with the riscv toolchain strip</em> before importing it into Ghidra:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#000;font-style:italic">/run/user/1000/bazel/external/gcc_riscv_suite+/bin/riscv64-unknown-linux-gnu-strip /tmp/main
+</span></span></span></code></pre></div><p>Now we can use the non-stripped version to orient ourselves and find reference points, then visit the stripped
+version to use those reference points and start to recover symbol names and structures.</p>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-be96d603f2fe35bafb47e87774356637">3.3 - Ghidra Examination</h1>
+    
+	<p>We want to know how we can use <code>Advisor</code> to untangle vectorized instruction sequences.  We&rsquo;ve seen that
+<code>Advisor</code> can help with simple loops and builtin functions like memcpy.  Now we want to tackle vectorized
+&lsquo;shuffle&rsquo; code, where GCC turns a sequence of simple assignments or initializations into a much more obscure
+sequence of vector instructions.</p>
+<p>We&rsquo;ll assume the Ghidra user wishes to search for malicious behavior adjacent to the <code>output_txt</code> function,
+called by <code>main</code> after the voice-to-text inference engine has crunched the numbers.</p>
+<p>The first step is to locate the <code>main</code> routine in our stripped binary.  There is no <code>main</code> symbol left after
+stripping, so we need to find a path from the entry point to <code>main</code> in the unstripped binary first.  The entry point is
+the symbol <code>_start</code> or <code>entry</code>.</p>
+<p>In the unstripped binary:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">void</span> <span style="color:#000">_start</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">void</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">...</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">gp</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">__global_pointer</span><span style="color:#a40000">$</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">uVar1</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">_PREINIT_0</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">__libc_start_main</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0x2649e</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">in_stack_00000000</span><span style="color:#000;font-weight:bold">,</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">stack0x00000008</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">uVar1</span><span style="color:#000;font-weight:bold">,</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">stack0x00000000</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">ebreak</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">main</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">return</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>While the stripped binary is:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">void</span> <span style="color:#000">entry</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">void</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">undefined8</span> <span style="color:#000">uVar1</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">undefined8</span> <span style="color:#000">in_stack_00000000</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#000">gp</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">__global_pointer</span><span style="color:#a40000">$</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">uVar1</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">_PREINIT_0</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">__libc_start_main</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0x2649e</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">in_stack_00000000</span><span style="color:#000;font-weight:bold">,</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">stack0x00000008</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">uVar1</span><span style="color:#000;font-weight:bold">,</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">stack0x00000000</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">ebreak</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">FUN_0001e758</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">return</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>So we know that <code>main</code> is <code>FUN_0001e758</code>.</p>
+<p>In the source code, <code>main</code> calls <code>output_txt</code>.  There is no <code>output_txt</code> symbol in either stripped or non-stripped binaries, so
+this function has apparently been converted into inline code deep within <code>main</code>.</p>
+<p>There are several different paths forward for examination.  Sometimes the best approach is to explore a short distance along each likely path,
+backtracking or switching paths when we get stuck.  For this exercise we want to know how to make <code>Advisor</code> useful in at least some of those
+cases where we get stuck.</p>
+<p>Paths available:</p>
+<ul>
+<li>Search for C strings as literals, then find where they are used.  This will often give printf or logging utility functions.</li>
+<li>Search for C++ string constructors given literals as input.  Start to identify standard library string objects in the code.</li>
+<li>Look for initialization or print functions recognizable either from symbol names or printf formatting strings.</li>
+<li>Start to identify recurring structures passed by pointers.  This can include context, state, and parameter structures</li>
+</ul>
+<p>Let&rsquo;s start with a routine that touches several of those paths.  This is the basic decompiled output from the stripped binary,
+for a function that gets called a lot by our identified <code>main</code> routine.  Peeking into the unstripped binary, we see that its signature
+is <code>void __thiscall std::string::string&lt;&gt;(string *this,char *cStr,allocator *param_2)</code> - a C++ basic_string constructor given a literal
+C string as input.  Note that there is actually no allocator passed into the function.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">void</span> <span style="color:#000">FUN_000542e0</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">undefined8</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">param_1</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">undefined</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">param_2</span><span style="color:#000;font-weight:bold">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">undefined</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">puVar1</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">long</span> <span style="color:#000">lVar2</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">undefined</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">puVar3</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">long</span> <span style="color:#000">lVar4</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">undefined8</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">puVar5</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">undefined</span> <span style="color:#000">auVar6</span> <span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">256</span><span style="color:#000;font-weight:bold">];</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">long</span> <span style="color:#000">in_vl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#000">gp</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">__global_pointer</span><span style="color:#a40000">$</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">puVar5</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">param_1</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">param_1</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">puVar5</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">param_2</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">undefined</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#0000cf;font-weight:bold">0x0</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#8f5902;font-style:italic">/* WARNING: Subroutine does not return */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">__throw_logic_error</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;basic_string: construction from null is not valid&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">puVar1</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">param_2</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">lVar4</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">do</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">vsetvli_e8m1tama</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">puVar1</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">puVar1</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">lVar4</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">auVar6</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vle8ff_v</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">puVar1</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">auVar6</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vmseq_vi</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">auVar6</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">lVar2</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vfirst_m</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">auVar6</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">lVar4</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">in_vl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">lVar2</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">puVar1</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">puVar1</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">lVar2</span> <span style="color:#ce5c00;font-weight:bold">-</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">long</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">param_2</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">puVar3</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">puVar1</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">puVar1</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">undefined</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#0000cf;font-weight:bold">0x10</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">puVar1</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">undefined</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#0000cf;font-weight:bold">0x1</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">undefined</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)(</span><span style="color:#000">param_1</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">param_2</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#204a87;font-weight:bold">goto</span> <span style="color:#000">LAB_00054326</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">puVar1</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">undefined</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#0000cf;font-weight:bold">0x0</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">goto</span> <span style="color:#000">LAB_00054326</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">puVar5</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">undefined8</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">operator</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">new</span><span style="color:#000;font-weight:bold">((</span><span style="color:#000">ulong</span><span style="color:#000;font-weight:bold">)(</span><span style="color:#000">puVar1</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">));</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">param_1</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">puVar1</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">param_1</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">puVar5</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">do</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">lVar4</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vsetvli_e8m8tama</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">puVar3</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">auVar6</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">vle8_v</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">param_2</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">puVar3</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">puVar3</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#ce5c00;font-weight:bold">-</span><span style="color:#000">lVar4</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">param_2</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">param_2</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">lVar4</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">vse8_v</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">auVar6</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">puVar5</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">puVar5</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">undefined8</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)((</span><span style="color:#204a87;font-weight:bold">long</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">puVar5</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000">lVar4</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">while</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">puVar3</span> <span style="color:#ce5c00;font-weight:bold">!=</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">undefined</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#0000cf;font-weight:bold">0x0</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">puVar5</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">undefined8</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">param_1</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f57900">LAB_00054326</span><span style="color:#000;font-weight:bold">:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">param_1</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">puVar1</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">undefined</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)((</span><span style="color:#204a87;font-weight:bold">long</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">puVar5</span> <span style="color:#ce5c00;font-weight:bold">+</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">long</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">puVar1</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#204a87;font-weight:bold">return</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span></code></pre></div><p>The exercise here is to recover the <code>basic_string</code> internal structure and identify the two vector stanzas.</p>
+<p>The Advisor identifies the first vector stanza as a <code>builtin_strlen</code> and the second as a <code>builtin_memcpy</code>.
+The std::string structure is 0x20 bytes and consists of a char*, a 64 bit string length, and a 16 byte union field.  If the string
+with null termination is less than 16 bytes in length, it is stored directly in the 16 byte union field.  Otherwise, new memory is allocated
+for the copy and a pointer is stored in the first 8 bytes of the union.</p>
+<p>The next step is easy enough to make the Advisor unnecessary.  A <code>std::vector</code> copy constructor involves two vector instruction stanzas.</p>
+<p>The new vector has three 64 bit pointer fields, all of which need to be zeroed.  GCC 15 does that with:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>  <span style="color:#000">vsetivli_e64m1tama</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">2</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">vmv_v_i</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">in_v1</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000;font-weight:bold">...</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">vse64_v</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">in_v1</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">this</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">undefined8</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">this</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">field_0x10</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">;</span>
+</span></span></code></pre></div><p>That&rsquo;s a little bit odd, since it is using three vector instructions to replace two scalar instructions, followed by a separate scalar store instruction.
+It could alternatively used three scalar store instructions or three vector instructions with an <code>m2</code> LMUL multiplier option.  Perhaps this is an example of
+incomplete or over-eager optimization, or an optimization from a RISC-V vendor who knows that vector instructions can be executed in parallel with scalar instructions.</p>
+<p>A little later in the copy constructor a <code>builtin_memcpy</code> vector stanza occurs, to copy the contents of the original vector into the newly initialized vector.</p>
+<p>This suggests:</p>
+<ul>
+<li>vector stanzas like <code>builtin_memcpy</code>, <code>builtin_strlen</code>, and vector instructions to zero 16 bytes are common and fairly easy to recognize, either by eye or Advisor.
+Adding more builtin functions to the exemplar directory makes good sense.</li>
+<li>vector stanzas often occur in initialization sequences, where they can be difficult to untangle from associated C++ object initializations.
+If we want to tackle this, we also need examples of stdlibc++ initializations, especially for vectors, maps, and iostreams.</li>
+<li>we need more examples of less common vector stanzas, including gather and slide operations.</li>
+</ul>
+
+</div>
+
+
+
+    
+	
+  
+    
+    
+	
+    
+
+<div class="td-content" style="page-break-before: always">
+    
+	<h1 id="pg-d351c5ba9783afb52010ebb162071547">3.4 - Dealing with C&#43;&#43;</h1>
+    
+	<p>GCC 15 uses RISCV vector instruction sequences in many initialization sequences - even when there is no need for a loop.
+If we want to understand that code, we need a decent understanding of what is getting initialized.  One way to
+move forward is with a small program that uses some of the same libstdc++ classes, to help us understand their memory layout
+and especially the fields that may need initialization.</p>
+<p>The first iteration of this is a toy program using <code>std::string</code>, <code>std::vector</code>, <code>std::pair</code>, <code>std::map</code>, and <code>std::ofstream</code> library code.
+we generally want to know object sizes, pointers, and key internal fields.  If something like <code>ofstream</code> is constructed on the stack,
+we can probably ignore any interior objects initialized within it.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#include</span> <span style="color:#8f5902;font-style:italic">&lt;string&gt;</span><span style="color:#8f5902;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#include</span> <span style="color:#8f5902;font-style:italic">&lt;vector&gt;</span><span style="color:#8f5902;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#include</span> <span style="color:#8f5902;font-style:italic">&lt;map&gt;</span><span style="color:#8f5902;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#include</span> <span style="color:#8f5902;font-style:italic">&lt;iostream&gt;</span><span style="color:#8f5902;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#include</span> <span style="color:#8f5902;font-style:italic">&lt;fstream&gt;</span><span style="color:#8f5902;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic">#include</span> <span style="color:#8f5902;font-style:italic">&lt;cstdint&gt;</span><span style="color:#8f5902;font-style:italic">
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">void</span> <span style="color:#000">dumpHex</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">uint64_t</span><span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">p</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">numwords</span><span style="color:#000;font-weight:bold">)</span>  <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">cout</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">\t</span><span style="color:#4e9a06">Raw: &#34;</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">for</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">i</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000">i</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#000">numwords</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000">i</span><span style="color:#ce5c00;font-weight:bold">++</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">cout</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;0x&#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">hex</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">p</span><span style="color:#000;font-weight:bold">[</span><span style="color:#000">i</span><span style="color:#000;font-weight:bold">];</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#204a87;font-weight:bold">if</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">i</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#000">numwords</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">cout</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;, &#34;</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">cout</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">void</span> <span style="color:#000">showString</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">const</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">string</span><span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">s</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">char</span><span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">label</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">cout</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;std::string &#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">label</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34; = &#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">s</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">cout</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">\t</span><span style="color:#4e9a06">Raw Size = 0x&#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">hex</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#204a87;font-weight:bold">sizeof</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">s</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">cout</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">\t</span><span style="color:#4e9a06">Length = 0x&#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">hex</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">s</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">length</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">dumpHex</span><span style="color:#000;font-weight:bold">((</span><span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">uint64_t</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">s</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">4</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">void</span> <span style="color:#000">showVector</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">const</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">vector</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">string</span><span style="color:#ce5c00;font-weight:bold">&gt;*</span> <span style="color:#000">v</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">char</span><span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">label</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">cout</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;std::vector&lt;std::string&gt; &#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">label</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;:&#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">cout</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">\t</span><span style="color:#4e9a06">Raw Size = 0x&#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">hex</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#204a87;font-weight:bold">sizeof</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">v</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">cout</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">\t</span><span style="color:#4e9a06">Internal Size = &#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">v</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">size</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">dumpHex</span><span style="color:#000;font-weight:bold">((</span><span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">uint64_t</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">v</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">3</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">void</span> <span style="color:#000">showPair</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">const</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">pair</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">string</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">string</span><span style="color:#ce5c00;font-weight:bold">&gt;*</span> <span style="color:#000">p</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">char</span><span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">label</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">cout</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;std::pair&lt;std::string,std::string&gt; &#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">label</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;:&#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">cout</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">\t</span><span style="color:#4e9a06">Raw Size = 0x&#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">hex</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#204a87;font-weight:bold">sizeof</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">p</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">dumpHex</span><span style="color:#000;font-weight:bold">((</span><span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">uint64_t</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">p</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">8</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">void</span> <span style="color:#000">showMap</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">const</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">map</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">string</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">string</span><span style="color:#ce5c00;font-weight:bold">&gt;*</span> <span style="color:#000">token_map</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">char</span><span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">label</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">cout</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;std::map&lt;std::string,std::string&gt; &#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">label</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;:&#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">cout</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">\t</span><span style="color:#4e9a06">Raw Size = 0x&#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">hex</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#204a87;font-weight:bold">sizeof</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">token_map</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">cout</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">\t</span><span style="color:#4e9a06">Internal Size = &#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">token_map</span><span style="color:#ce5c00;font-weight:bold">-&gt;</span><span style="color:#000">size</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">dumpHex</span><span style="color:#000;font-weight:bold">((</span><span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">uint64_t</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">token_map</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">6</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">void</span> <span style="color:#000">showOfstream</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">const</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">ofstream</span><span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">fout</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">char</span><span style="color:#ce5c00;font-weight:bold">*</span> <span style="color:#000">label</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">cout</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;std::ofstream &#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">label</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;:&#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">cout</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">\t</span><span style="color:#4e9a06">Raw Size = 0x&#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">hex</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#204a87;font-weight:bold">sizeof</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">fout</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">dumpHex</span><span style="color:#000;font-weight:bold">((</span><span style="color:#204a87;font-weight:bold">const</span> <span style="color:#204a87;font-weight:bold">uint64_t</span><span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000">fout</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#0000cf;font-weight:bold">8</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">int</span> <span style="color:#000">main</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">cout</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;Initializing</span><span style="color:#4e9a06">\n</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">ofstream</span> <span style="color:#000">fout</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;/tmp/scratch&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">showOfstream</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">fout</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;initialized ofstream&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">string</span> <span style="color:#000">xs</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;short string&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">showString</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">xs</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;short string&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">string</span> <span style="color:#000">x</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;This is a sample long string&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">showString</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;long string&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">vector</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">string</span><span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#000">vx</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">showVector</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">vx</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;empty vector&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">vx</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">push_back</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">x</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">showVector</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">vx</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;singleton vector&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">fout</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#4e9a06">&#34;something to fill the file&#34;</span> <span style="color:#ce5c00;font-weight:bold">&lt;&lt;</span> <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">endl</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">pair</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">string</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">string</span><span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#000">map_element</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;key&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;value&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">showPair</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">map_element</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;map_element&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">map</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">string</span><span style="color:#000;font-weight:bold">,</span><span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">string</span><span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#000">token_map</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">showMap</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">token_map</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;token_map, empty&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">token_map</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">insert</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">map_element</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">showMap</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">token_map</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;token_map, one insertion&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">fout</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">close</span><span style="color:#000;font-weight:bold">();</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">showOfstream</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">fout</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;closed ofstream&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><p>Build with:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> bazel build --platforms<span style="color:#ce5c00;font-weight:bold">=</span>//platforms:riscv_gcc --copt<span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#4e9a06">&#39;-march=rv64gcv&#39;</span> other_src:stdlibc++_exploration
+</span></span></code></pre></div><p>Run this under qemu emulation :</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span><span style="color:#8f5902">$</span> qemu-riscv64-static -L /opt/riscvx/sysroot -E <span style="color:#000">LD_LIBRARY_PATH</span><span style="color:#ce5c00;font-weight:bold">=</span>/opt/riscvx/sysroot/riscv64-unknown-linux-gnu/lib/ bazel-bin/other_src/stdlibc++_exploration
+</span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">Initializing
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">std::ofstream initialized ofstream:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Raw Size = 0x200
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Raw: 0x7fbff0608d70, 0x7fbff0608bb8, 0x288a0, 0x288a0, 0x288a0, 0x0, 0x0, 0x0, 
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">std::string short string = short string
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Raw Size = 0x20
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Length = 0xc
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Raw: 0x7fbfe3ffe820, 0xc, 0x74732074726f6873, 0x7f00676e6972, 
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">std::string long string = This is a sample long string
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Raw Size = 0x20
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Length = 0x1c
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Raw: 0x2a8b0, 0x1c, 0x1c, 0x7fbfe3ffe8f0, 
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">std::vector&lt;std::string&gt; empty vector:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Raw Size = 0x18
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Internal Size = 0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Raw: 0x0, 0x0, 0x0, 
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">std::vector&lt;std::string&gt; singleton vector:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Raw Size = 0x18
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Internal Size = 1
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Raw: 0x2a8e0, 0x2a900, 0x2a900, 
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">std::pair&lt;std::string,std::string&gt; map_element:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Raw Size = 0x40
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Raw: 0x7fbfe3ffe890, 0x3, 0x79656b, 0x7fbff0411528, 0x7fbfe3ffe8b0, 0x5, 0x65756c6176, 0x7fbff14d751e, 
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">std::map&lt;std::string,std::string&gt; token_map, empty:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Raw Size = 0x30
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Internal Size = 0
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Raw: 0x1, 0x7fbf00000000, 0x0, 0x7fbfe3ffe858, 0x7fbfe3ffe858, 0x0, 
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">std::map&lt;std::string,std::string&gt; token_map, one insertion:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Raw Size = 0x30
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Internal Size = 1
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Raw: 0x1, 0x7fbf00000000, 0x2a940, 0x2a940, 0x2a940, 0x1, 
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">std::ofstream closed ofstream:
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Raw Size = 0x200
+</span></span></span><span style="display:flex;"><span><span style="color:#000;font-style:italic">	Raw: 0x7fbff0608d70, 0x7fbff0608bb8, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 
+</span></span></span></code></pre></div><p>Now we can load <code>bazel-bin/other_src/stdlibc++_exploration</code> into Ghidra and get some insight into how these standard library classes are
+initialized.</p>
+<p><code>std::string</code> has a length of 0x20 bytes and a structure similar to:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">string</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#8f5902;font-style:italic">/* stdlib basic string */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">char</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">cstr</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">uint64_t</span> <span style="color:#000">length</span><span style="color:#000;font-weight:bold">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#204a87;font-weight:bold">char</span> <span style="color:#000">data</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">16</span><span style="color:#000;font-weight:bold">];</span>
+</span></span><span style="display:flex;"><span><span style="color:#000;font-weight:bold">};</span>
+</span></span></code></pre></div><p>If the string is 15 bytes or less, it is stored directly in <code>data</code>.  Otherwise new memory is allocated and data holds information needed to manage that allocation.</p>
+<p><code>std::vector&lt;T&gt;</code> has a length of 0x18 bytes, regardless of the component type <code>T</code>.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#204a87;font-weight:bold">struct</span> <span style="color:#000">vector</span> <span style="color:#000;font-weight:bold">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#000">T</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">start</span><span style="color:#000;font-weight:bold">;</span>        <span style="color:#8f5902;font-style:italic">// points to the first element in the vector
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">T</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">end</span><span style="color:#000;font-weight:bold">;</span>          <span style="color:#8f5902;font-style:italic">// points just past the last element in the vector
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span>    <span style="color:#000">T</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000">alloc_end</span><span style="color:#000;font-weight:bold">;</span>    <span style="color:#8f5902;font-style:italic">// points just past the last empty element allocated for the vector.
+</span></span></span><span style="display:flex;"><span><span style="color:#8f5902;font-style:italic"></span><span style="color:#000;font-weight:bold">};</span>
+</span></span></code></pre></div><p><code>std::pair&lt;T1,T2&gt;</code> is simply a concatenation of elements of type <code>T1</code> and <code>T2</code>, so a pair of strings is 0x40 bytes and a pair of string pointers is 0x10 bytes.</p>
+<p><code>std::ofstream</code> is a large object of 0x200 bytes.  We&rsquo;ll ignore its internal structure for now - and especially any <code>whisper.cpp</code> code initializing elements of that structure.</p>
+<p>Ghidra examination of <code>stdlibc++_exploration</code> provides some insight and more than a few red herrings.</p>
+<h2 id="stdlibc_exploration">stdlibc++_exploration</h2>
+<h3 id="stdvector">std::vector</h3>
+<p>The three 64 bit pointers that make up a <code>std::vector&lt;std::string&gt;</code> are initialized inline to zero with a stanza of five vector instructions - even though that does not look optimal.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>  <span style="color:#000">vsetivli_e8mf2tama</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">8</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">vmv_v_i</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">in_v1</span><span style="color:#000;font-weight:bold">,</span><span style="color:#0000cf;font-weight:bold">0</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">vse8_v</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">in_v1</span><span style="color:#000;font-weight:bold">,</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">vx</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">end</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">vse8_v</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">in_v1</span><span style="color:#000;font-weight:bold">,</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">vx</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">alloc_end</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">vse8_v</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">in_v1</span><span style="color:#000;font-weight:bold">,</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">vx</span><span style="color:#000;font-weight:bold">);</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#000">showVector</span><span style="color:#000;font-weight:bold">(</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">vx</span><span style="color:#000;font-weight:bold">,</span><span style="color:#4e9a06">&#34;empty vector&#34;</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><p><code>vx.push_back(x)</code> makes a copy of the string x and allocates space for both the vector element and the string copy with <code>operator.new</code>.</p>
+<p>std::vectors are most easily recognized by their destructors:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#000">std</span><span style="color:#ce5c00;font-weight:bold">::</span><span style="color:#000">vector</span><span style="color:#ce5c00;font-weight:bold">&lt;&gt;::~</span><span style="color:#000">vector</span><span style="color:#000;font-weight:bold">((</span><span style="color:#000">vector</span><span style="color:#ce5c00;font-weight:bold">&lt;&gt;</span> <span style="color:#ce5c00;font-weight:bold">*</span><span style="color:#000;font-weight:bold">)</span><span style="color:#ce5c00;font-weight:bold">&amp;</span><span style="color:#000">vx</span><span style="color:#000;font-weight:bold">);</span>
+</span></span></code></pre></div><h3 id="stdofstream">std::ofstream</h3>
+<p>File structures like std::ofstream are easy to recognize through their constructors and destructors.  They can be confusing though, since they are likely to be reused if
+multiple files are opened and closed in the same function.</p>
 
 </div>
 

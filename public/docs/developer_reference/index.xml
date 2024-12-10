@@ -30,10 +30,12 @@ Without this branch Ghidra is stuck with a never-ratified older version of RISCV
 &lt;/ul&gt;
 &lt;h2 id=&#34;bazel&#34;&gt;Bazel&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/bazelbuild/bazel/releases&#34;&gt;Bazel 11.4&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/bazelbuild/bazel/releases&#34;&gt;Bazel 8.0&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Bazel builds in this workspace generate output in the temporary directory /run/user/1000/bazel, as specified in .bazelrc.
-This override can be changed or removed.&lt;/p&gt;
+&lt;p&gt;Bazel builds in this workspace generate output in the temporary directory &lt;code&gt;/run/user/1000/bazel&lt;/code&gt;, as specified in &lt;code&gt;.bazelrc&lt;/code&gt;.
+This override can be changed or removed&lt;/p&gt;
+&lt;p&gt;This project should work with Bazel 7.x as well, after adjusting some toolchain path names.  Bazel 8 uses &amp;lsquo;+&amp;rsquo; instead of &amp;lsquo;~&amp;rsquo;
+as an external repo naming suffix and &amp;lsquo;@@&amp;rsquo; instead of &amp;lsquo;@&amp;rsquo; to identify standard bazel repositories.&lt;/p&gt;
 &lt;h2 id=&#34;toolchain&#34;&gt;Toolchain&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://sourceware.org/git/binutils-gdb&#34;&gt;binutils 2.42.50&lt;/a&gt;&lt;/li&gt;
@@ -42,8 +44,9 @@ This override can be changed or removed.&lt;/p&gt;
 &lt;li&gt;sysroot - a stripped down linux sysroot derived from the sysroot bootstrap in
 &lt;a href=&#34;https://github.com/riscv-collab/riscv-gnu-toolchain&#34;&gt;riscv-gnu-toolchain&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;The toolchain is packaged locally as a Bazel module named &lt;code&gt;gcc_riscv_suite&lt;/code&gt;, version 15.0.0.
-This module depends on a second module, &lt;code&gt;fedora_syslibs&lt;/code&gt; version 40.0.0.  These are served out of a local
+&lt;p&gt;The toolchain is packaged locally as a Bazel module named &lt;code&gt;gcc_riscv_suite&lt;/code&gt;, version 15.0.0.1.
+(Note that this is the first patch to the Bazel module based on the unreleased &lt;code&gt;GCC-15.0.0&lt;/code&gt;).
+This module depends on a second module, &lt;code&gt;fedora_syslibs&lt;/code&gt; version 41.0.0.  These are served out of a local
 Bazel module repository.
 The &lt;code&gt;gcc_riscv_suite&lt;/code&gt; and &lt;code&gt;fedora_syslibs&lt;/code&gt; modules wrap a 42 MB and 4.0 MB tarball, respectively.&lt;/p&gt;
 &lt;h2 id=&#34;emulators&#34;&gt;Emulators&lt;/h2&gt;
@@ -52,7 +55,7 @@ The &lt;code&gt;gcc_riscv_suite&lt;/code&gt; and &lt;code&gt;fedora_syslibs&lt;/
 &lt;li&gt;&lt;code&gt;qemu-riscv64&lt;/code&gt; provides user space emulation, which is very useful for exploring the behavior of
 particularly confusing assembly code sequences.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;qemu-system-riscv64&lt;/code&gt; provides full RISCV-64 VM hosting.  This is more narrowly useful when testing
-binaries that require non-standard kernel options or kernel modules.
+binaries like DPDK which require non-standard kernel options or kernel modules.
 &lt;ul&gt;
 &lt;li&gt;The RISCV-64 VM used here is based on an Ubuntu 24.04 disk image and the &lt;code&gt;u-boot.bin&lt;/code&gt; boot loader.
 This boot loader is critical for RISCV VMs, since the emulated BIOS firmware provides the kernel
@@ -66,8 +69,8 @@ with the definitive set of RISCV extensions available to the hardware threads (a
 &lt;/ul&gt;
 &lt;h2 id=&#34;system&#34;&gt;System&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;Fedora 40 with wayland graphics.&lt;/li&gt;
-&lt;li&gt;Python 3&lt;/li&gt;
+&lt;li&gt;Fedora 41 with wayland graphics.&lt;/li&gt;
+&lt;li&gt;Python 3.13&lt;/li&gt;
 &lt;/ul&gt;
 
       </description>
@@ -121,11 +124,7 @@ they are found in the disassembly.&lt;/li&gt;
 the compiler reorders instructions.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2 id=&#34;querying-the-database-in-advisor&#34;&gt;Querying the Database in Advisor&lt;/h2&gt;
-
-&lt;figure&gt;
-    &lt;img src=&#34;Workflow_advisor.svg&#34; width=&#34;80%&#34;/&gt; 
-&lt;/figure&gt;
-
+&lt;p&gt;&lt;img src=&#34;../Workflow_generation.svg&#34; alt=&#34;Workflow Generation&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Users can select assembly code from Ghidra&amp;rsquo;s listing window, then run analysis cells in &lt;code&gt;Advisor.ipynb&lt;/code&gt; to generate reports
 on the types of C code that may match the listing.  Users will likely want to iterate complex selections by adding custom
 examples and repeating the match, to see if they can reproduce the C code that might have generated the vectorized assembly.&lt;/p&gt;

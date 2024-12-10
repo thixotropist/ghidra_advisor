@@ -167,10 +167,12 @@ Without this branch Ghidra is stuck with a never-ratified older version of RISCV
 </ul>
 <h2 id="bazel">Bazel</h2>
 <ul>
-<li><a href="https://github.com/bazelbuild/bazel/releases">Bazel 11.4</a></li>
+<li><a href="https://github.com/bazelbuild/bazel/releases">Bazel 8.0</a></li>
 </ul>
-<p>Bazel builds in this workspace generate output in the temporary directory /run/user/1000/bazel, as specified in .bazelrc.
-This override can be changed or removed.</p>
+<p>Bazel builds in this workspace generate output in the temporary directory <code>/run/user/1000/bazel</code>, as specified in <code>.bazelrc</code>.
+This override can be changed or removed</p>
+<p>This project should work with Bazel 7.x as well, after adjusting some toolchain path names.  Bazel 8 uses &lsquo;+&rsquo; instead of &lsquo;~&rsquo;
+as an external repo naming suffix and &lsquo;@@&rsquo; instead of &lsquo;@&rsquo; to identify standard bazel repositories.</p>
 <h2 id="toolchain">Toolchain</h2>
 <ul>
 <li><a href="https://sourceware.org/git/binutils-gdb">binutils 2.42.50</a></li>
@@ -179,8 +181,9 @@ This override can be changed or removed.</p>
 <li>sysroot - a stripped down linux sysroot derived from the sysroot bootstrap in
 <a href="https://github.com/riscv-collab/riscv-gnu-toolchain">riscv-gnu-toolchain</a></li>
 </ul>
-<p>The toolchain is packaged locally as a Bazel module named <code>gcc_riscv_suite</code>, version 15.0.0.
-This module depends on a second module, <code>fedora_syslibs</code> version 40.0.0.  These are served out of a local
+<p>The toolchain is packaged locally as a Bazel module named <code>gcc_riscv_suite</code>, version 15.0.0.1.
+(Note that this is the first patch to the Bazel module based on the unreleased <code>GCC-15.0.0</code>).
+This module depends on a second module, <code>fedora_syslibs</code> version 41.0.0.  These are served out of a local
 Bazel module repository.
 The <code>gcc_riscv_suite</code> and <code>fedora_syslibs</code> modules wrap a 42 MB and 4.0 MB tarball, respectively.</p>
 <h2 id="emulators">Emulators</h2>
@@ -189,7 +192,7 @@ The <code>gcc_riscv_suite</code> and <code>fedora_syslibs</code> modules wrap a 
 <li><code>qemu-riscv64</code> provides user space emulation, which is very useful for exploring the behavior of
 particularly confusing assembly code sequences.</li>
 <li><code>qemu-system-riscv64</code> provides full RISCV-64 VM hosting.  This is more narrowly useful when testing
-binaries that require non-standard kernel options or kernel modules.
+binaries like DPDK which require non-standard kernel options or kernel modules.
 <ul>
 <li>The RISCV-64 VM used here is based on an Ubuntu 24.04 disk image and the <code>u-boot.bin</code> boot loader.
 This boot loader is critical for RISCV VMs, since the emulated BIOS firmware provides the kernel
@@ -203,8 +206,8 @@ with the definitive set of RISCV extensions available to the hardware threads (a
 </ul>
 <h2 id="system">System</h2>
 <ul>
-<li>Fedora 40 with wayland graphics.</li>
-<li>Python 3</li>
+<li>Fedora 41 with wayland graphics.</li>
+<li>Python 3.13</li>
 </ul>
 
 </div>
@@ -262,11 +265,7 @@ they are found in the disassembly.</li>
 the compiler reorders instructions.</li>
 </ul>
 <h2 id="querying-the-database-in-advisor">Querying the Database in Advisor</h2>
-
-<figure>
-    <img src="Workflow_advisor.svg" width="80%"/> 
-</figure>
-
+<p><img src="../Workflow_generation.svg" alt="Workflow Generation"></p>
 <p>Users can select assembly code from Ghidra&rsquo;s listing window, then run analysis cells in <code>Advisor.ipynb</code> to generate reports
 on the types of C code that may match the listing.  Users will likely want to iterate complex selections by adding custom
 examples and repeating the match, to see if they can reproduce the C code that might have generated the vectorized assembly.</p>
